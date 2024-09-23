@@ -1,12 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
+
+import Countdown from '@/sections/Countdown.astro';
+import Footer from '@/sections/Footer.astro';
+import Hero from '@/sections/Hero.astro';
+import Info from '@/sections/Info.astro';
+import PrincipalDate from '@/sections/PrincipalDate.astro';
 ---
 
 <Layout title="Hermandad Gamonalense">
+	<Hero />
 	<main>
-		<h1 class="text-white animate-blurred-fade-in">Hermandad Gamonalense</h1>
-		<p>¡Bienvenidos a la web de la Hermandad Gamonalense!</p>
-		<p>Esta es la página principal de la web de la Hermandad Gamonalense. Aquí podrás encontrar información sobre la hermandad, sus actividades y eventos, y mucho más.</p>
-		<p>¡Esperamos que disfrutes de tu visita!</p>
+		<PrincipalDate />
+		<Info />
+		<Countdown />
 	</main>
+	<Footer />
 </Layout>
