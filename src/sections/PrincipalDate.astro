@@ -3,18 +3,47 @@
         27 de Enero<span aria-hidden class="hidden md:inline mx-1">.</span><br
             aria-hidden
             class="block md:hidden"
-        /> 10:00h CET
+        />
+            <script is:inline>
+                const END_DATE = 1737990000000
+                const d = new Date(END_DATE)
+                const date = d.toLocaleTimeString("es", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })
+
+                // get current gmt
+                const tzOffset = d.getTimezoneOffset() / 60
+                const gmt = tzOffset > 0 ? `GMT-${tzOffset}` : `GMT+${Math.abs(tzOffset)}`
+
+                const TZ_DISCTIONARY = {
+                    "-1": "CET",
+                    "-5": "PET",
+                    "-5": "EST",
+                    "-6": "CST",
+                    "-7": "MST",
+                    "-8": "PST",
+                    "-9": "AKST",
+                    "-10": "HST",
+                }
+
+                const gmtAbbr = TZ_DISCTIONARY[tzOffset] || gmt
+                console.log("🚀 ~ tzOffset:", tzOffset * -1)
+
+                const breakLineScript = document.currentScript
+                breakLineScript.parentNode.innerHTML += `${date} ${gmtAbbr}`
+            </script>
     </h2>
     <h3 class="uppercase text-2xl font-medium flex flex-col max-w-sm mt-6">
         <span>Chinchilpos y Gamonales</span>
         <span>Estadio Municipal (Huayucachi)</span>
     </h3>
     <a
-        class={`border-primary border-2 rounded-lg
-        bg-primary text-primary-950
+        class={`border-primary-600 border-2 rounded-lg
+        text-tertiary
         font-medium uppercase text-lg
         px-6 py-1 mt-8
-        hover:bg-secondary hover:scale-125
+        hover:bg-primary hover:scale-125
         `}
         href="https://www.youtube.com/watch?v=UTWO1rgo2W4"
         target="_blank"
