@@ -20,8 +20,17 @@ export default {
 				'primary-800': '#196471',
 				'primary-900': '#1a525f',
 				'primary-950': '#0b3741',
+				'twitch': "var(--color-twitch)",
 			},
 		},
 	},
-	plugins: [animations],
+	plugins: [
+		animations,
+		function ({
+			addVariant
+		}) {
+			addVariant("any-hover", "@media (any-hover: hover) { &:hover }")
+			addVariant("mobile", "@media (any-hover: none) { & }")
+		},
+	],
 }
