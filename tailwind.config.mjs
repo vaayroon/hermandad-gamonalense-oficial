@@ -2,12 +2,13 @@ import animations from '@midudev/tailwind-animations'
 
 /** @type {import('tailwindcss').Config} */
 export default {
+	darkMode: 'selector',
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
 			colors: {
-				'primary': '#26dce4',
-				'secondary': '#ddd',
+				'primary': 'var(--color-primary)',
+				'secondary': 'var(--color-secondary)',
 				'tertiary': '#000',
 				'primary-50': '#edfefd',
 				'primary-100': '#d1fcfc',

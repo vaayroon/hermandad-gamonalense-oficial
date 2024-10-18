@@ -1,4 +1,4 @@
-<section class="animate-fade-in animate-delay-300 mt-24 mx-auto flex flex-col justify-center items-center text-center text-tertiary">
+<section class="text-primary text-center mt-24 mx-auto flex flex-col justify-center items-center">
     <h2 class="uppercase text-5xl font-semibold">
         27 de Enero<span aria-hidden class="hidden md:inline mx-1">.</span><br
             aria-hidden
@@ -28,7 +28,6 @@
                 }
 
                 const gmtAbbr = TZ_DISCTIONARY[tzOffset] || gmt
-                console.log("🚀 ~ tzOffset:", tzOffset * -1)
 
                 const breakLineScript = document.currentScript
                 breakLineScript.parentNode.innerHTML += `${date} ${gmtAbbr}`
@@ -40,10 +39,10 @@
     </h3>
     <a
         class={`border-primary-600 border-2 rounded-lg
-        text-tertiary
+        text-primary
         font-medium uppercase text-lg
         px-6 py-1 mt-8
-        hover:bg-primary hover:scale-125
+        hover:bg-primary-400 hover:scale-125
         `}
         href="https://www.youtube.com/watch?v=UTWO1rgo2W4"
         target="_blank"

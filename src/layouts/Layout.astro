@@ -1,25 +1,61 @@
 ---
 // Supports weights 100-900
+import SmokeBackground from '@/components/SmokeBackground.astro';
 import '@fontsource-variable/jost';
 
 interface Props {
+	description: string;
 	title: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Hermandad Gamonalense - Chinchilpos y Gamonales 2025 - Fiesta patronal Huayucachi" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="canonical" href="https://hermandad-gamonalense-oficial.vercel.app/">
 		<title>{title}</title>
+
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href="https://hermandad-gamonalense-oficial.vercel.app">
+		<meta name="viewport" content="width=device-width" />
+
+		<meta name="keywords" content="huayucachi, gamonales, chinchilpos, patronal, zumbanacuy, vaayroon" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@infoHermandadGamonalense" />
+		<meta name="twitter:creator" content="@ChinchilposYGamonales" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="/og.jpg" />
+
+		<meta name="og:image" content="/og.jpg" />
+		<meta name="og:title" content={title} />
+		<meta name="og:description" content={description} />
+		<meta name="og:url" content="https://hermandad-gamonalense-oficial.vercel.app" />
+		<meta name="og:site_name" content="Hermandad Gamonalense" />
+		<meta name="og:type" content="website" />
+		<meta name="og:locale" content="es_PE" />
+
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow" />
+
+		<script is:inline>
+			window.getThemePreference = () => {
+				const localItem = typeof localStorage !== "undefined" && localStorage.getItem("theme")
+				if (localItem) return localItem
+				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+			}
+
+			const isDark = window.getThemePreference() === "dark"
+			document.documentElement.classList.toggle("dark", isDark)
+		</script>
 	</head>
 	<body>
+		<SmokeBackground />
 		<div class="max-w-6xl px-2 lg:px-10 pt-20 mx-auto">
 			<slot />
 		</div>
@@ -27,12 +63,19 @@ const { title } = Astro.props;
 </html>
 <style is:global>
 	:root {
+		--color-primary: #0c0c0c;
+		--color-secondary: #dddddd;
+		--background-color: var(--color-secondary);
 		--background-twitch: var(--color-twitch-ice);
 		--color-twitch: #9146ff;
 		--color-twitch-ice: #f0f0ff;
 	}
+	.dark {
+		--color-primary: #dddddd;
+		--color-secondary: #0c0c0c;
+	}
 	html {
 		font-family: 'Jost Variable' system-ui, sans-serif;
-		background: #ddd;
+		/* background-color: var(--background-color); */
 	}
 </style>

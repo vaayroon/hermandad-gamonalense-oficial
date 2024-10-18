@@ -1,13 +1,14 @@
 ---
+import ThemeToogle from "@/components/ThemeToogle.astro";
 import Facebook from "@/icons/facebook.astro";
 import Github from "@/icons/github.astro";
 import Instagram from "@/icons/instagram.astro";
 ---
 
 <footer
-  class="mt-20 w-full border-black border-t-2 flex flex-col md:flex-row justify-center items-center md:justify-between pt-6 pb-20 gap-y-10"
+  class="mt-20 w-full border-primary border-t-2 flex flex-col md:flex-row justify-center items-center md:justify-between pt-6 pb-20 gap-y-10"
 >
-  <span class="text-black text-center">
+  <span class="text-primary text-center">
     @ 2024 Hermandad Gamonalense <span aria-hidden class="hidden md:inline"
       >|</span
     ><br aria-hidden class="block md:hidden" /> Todos los derechos reservados.
@@ -21,7 +22,7 @@ import Instagram from "@/icons/instagram.astro";
         href="https://www.facebook.com/profile.php?id=61565043432026"
         class="hover:scale-125 hover:opacity-70 transition inline-block"
       >
-        <Facebook class="text-white transition-colors duration-300 hover:text-primary motion-reduce:duration-0"/>
+        <Facebook class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"/>
       </a>
     </li>
     <li>
@@ -31,8 +32,11 @@ import Instagram from "@/icons/instagram.astro";
         href="https://github.com/vaayroon/hermandad-gamonalense-oficial"
         class="hover:scale-125 hover:opacity-70 transition inline-block"
       >
-        <Github class="text-white transition-colors duration-300 hover:text-primary motion-reduce:duration-0"/>
+        <Github class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"/>
       </a>
+    </li>
+    <li>
+      <ThemeToogle />
     </li>
   </ul>
 </footer>
