@@ -100,7 +100,7 @@
     renderer.setClearColor(currentTheme.background, 1);
 
     smokeParticles.forEach((p) => {
-      p.material.opacity = currentTheme.opacity;
+      (p.material as THREE.MeshLambertMaterial).opacity = currentTheme.opacity;
     });
   });
 </script>
