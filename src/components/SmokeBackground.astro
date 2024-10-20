@@ -9,14 +9,14 @@
 
   const THEMES = {
     dark: {
-      background: 0x444444,
+      background: 0x111111,
       light: 0xffffff,
       opacity: 1,
     },
     light: {
       background: 0xeeeeee,
       light: 0xffffff,
-      opacity: 0.3,
+      opacity: 0.2,
     },
   } as const;
 
@@ -47,7 +47,7 @@
   const loader = new THREE.TextureLoader();
   loader.crossOrigin = "";
 
-  loader.load("/img/effects/smoke.webp", (texture) => {
+  loader.load("/img/effects/smokegamonal.webp", (texture) => {
     const smokeGeo = new THREE.PlaneGeometry(300, 300);
     const smokeMaterial = new THREE.MeshLambertMaterial({
       map: texture,

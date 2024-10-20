@@ -1,11 +1,15 @@
 ---
 import Hermandad from "@/icons/hermandad.astro";
+import Zumba from "@/icons/zumba.astro";
 
 const TIMESTAMP_END = 1737990000000;
 ---
 
 <section class="my-32 flex flex-col gap-y-10 justify-center items-center">
-  <Hermandad class="grayscale w-auto h-auto" />
+  <div class="relative">
+    <Zumba class="absolute text-primary-400 animate-fade-in-up w-auto h-auto" />
+    <Hermandad class="grayscale w-auto h-auto" />
+  </div>
 
   <div
     class="flex flex-rom gap-x-1 text-primary-500 uppercase font-semibold"
@@ -13,14 +17,14 @@ const TIMESTAMP_END = 1737990000000;
   >
     <div class="flex flex-col justify-center items-center gap-y-2 w-16">
       <span class="text-4xl tabular-nums" data-days>000</span>
-      <span class="text-xs text-center">Días</span>
+      <span class="text-xs text-center text-primary">Días</span>
     </div>
 
     <span aria-hidden="true" class="mt-1 text-xl">:</span>
 
     <div class="flex flex-col justify-center items-center gap-y-2 w-16">
       <span class="text-4xl tabular-nums" data-hours>00</span>
-      <span class="text-xs text-center">Horas</span>
+      <span class="text-xs text-center text-primary">Horas</span>
     </div>
 
     <span aria-hidden="true" class="mt-1 text-xl">:</span>
@@ -28,7 +32,7 @@ const TIMESTAMP_END = 1737990000000;
     
     <div class="flex flex-col justify-center items-center gap-y-2 w-16">
       <span class="text-4xl tabular-nums" data-minutes>00</span>
-      <span class="text-xs text-center">Minutos</span>
+      <span class="text-xs text-center text-primary">Minutos</span>
     </div>
 
     <span aria-hidden="true" class="mt-1 text-xl">:</span>
@@ -36,7 +40,7 @@ const TIMESTAMP_END = 1737990000000;
     
     <div class="flex flex-col justify-center items-center gap-y-2 w-16">
       <span class="text-4xl tabular-nums" data-seconds>00</span>
-      <span class="text-xs text-center">Segundos</span>
+      <span class="text-xs text-center text-primary">Segundos</span>
     </div>
   </div>
 </section>
