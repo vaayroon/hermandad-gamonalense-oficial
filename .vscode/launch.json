@@ -2,8 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "./node_modules/.bin/astro dev",
-      "name": "Development server",
+      "command": "pnpm run dev",
+      "name": "Run HG",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm run build",
+      "name": "Build HG",
       "request": "launch",
       "type": "node-terminal"
     }

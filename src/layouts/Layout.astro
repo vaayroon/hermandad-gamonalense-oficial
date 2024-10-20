@@ -1,6 +1,7 @@
 ---
 // Supports weights 100-900
 import SmokeBackground from '@/components/SmokeBackground.astro';
+import '../../public/fonts/ponsiroundedslab/stylesheet.css'
 import '@fontsource-variable/jost';
 
 interface Props {
@@ -75,7 +76,7 @@ const { title, description } = Astro.props;
 		--color-secondary: #0c0c0c;
 	}
 	html {
-		font-family: 'Jost Variable' system-ui, sans-serif;
+		font-family: 'PonsRoundedSlab-Regular', 'Jost Variable', system-ui, sans-serif;
 		/* background-color: var(--background-color); */
 	}
 </style>
