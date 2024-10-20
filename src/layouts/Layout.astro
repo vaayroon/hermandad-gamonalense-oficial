@@ -1,7 +1,8 @@
 ---
 // Supports weights 100-900
+import { ViewTransitions } from "astro:transitions"
 import SmokeBackground from '@/components/SmokeBackground.astro';
-import '../../fonts/ponsiroundedslab/stylesheet.css'
+import '@@/fonts/ponsiroundedslab/stylesheet.css'
 import '@fontsource-variable/jost';
 
 interface Props {
@@ -54,6 +55,7 @@ const { title, description } = Astro.props;
 			const isDark = window.getThemePreference() === "dark"
 			document.documentElement.classList.toggle("dark", isDark)
 		</script>
+		<ViewTransitions />
 	</head>
 	<body>
 		<SmokeBackground />
