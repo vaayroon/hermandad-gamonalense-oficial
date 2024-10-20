@@ -2,13 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "pnpm run dev",
+      "command": "pnpm dev",
       "name": "Run HG",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "pnpm run build",
+      "command": "pnpm build",
       "name": "Build HG",
       "request": "launch",
       "type": "node-terminal"
