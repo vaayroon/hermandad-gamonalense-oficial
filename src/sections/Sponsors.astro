@@ -1,0 +1,63 @@
+---
+import Typography from "@/components/Typography.astro"
+import { SPONSORS } from "@/consts/sponsors"
+---
+
+<section class="my-40">
+	<div class="mb-20 flex flex-col items-center justify-center gap-4 xs:flex-row">
+		<Typography as="h3" variant="h3" color="primary" class:list={"text-center"}>
+			Priostes
+		</Typography>
+		<Typography as="h3" variant="h3" color="primary" class:list={"mt-4 text-center"}>
+			Familia Romero Prieto
+		</Typography>
+		<a
+			class="transition hover:scale-110 focus:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus:scale-100"
+			href="#"
+			title="Ir a la página del Prioste de la fiesta"
+			target="_blank"
+			aria-label="Link con el logo/foto del Prioste"
+		>
+			<img
+				src={"//FIXME: Add the image of the Prioste and the link to the page"}
+				loading="lazy"
+				width={128}
+				height={70}
+				fetchpriority="low"
+				alt={"Logo del Prioste"}
+				class="inline-block select-none text-white transition hover:text-accent focus:text-accent"
+			/>
+		</a>
+	</div>
+
+	<Typography as="h3" variant="h3" color="primary" class:list={"text-center"}>
+		Patrocinadores
+	</Typography>
+	<Typography as="p" variant="body" color="primary" class:list={"mt-4 text-center"}>
+		La fiesta en honor al patron Tayta Niño se puede llevar a cabo gracias a ...
+	</Typography>
+  <div class="mt-12 select-none flex justify-center items-center flex-shrink gap-2 md:gap-8">
+    {
+      SPONSORS.map(({id, name, logo, url}) => (
+      	<a
+					class="company-link group relative flex h-28 items-center justify-center md:h-32"
+					title={`Visita la página del patrocinador ${name}`}
+					href={url}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label={`Link con el logo de ${name} que lleva a ${url}`}
+				>
+					<img
+						src={`/img/sponsors/${logo.name ?? id}.webp`}
+						width={logo.width}
+						loading="lazy"
+						height={logo.height}
+						fetchpriority="low"
+						alt={`Logo de ${name}`}
+						class="company-logo px-5 text-white transition group-hover:scale-110 group-focus:scale-110 md:px-4"
+					/>
+				</a>
+      ))
+    }
+  </div>
+</section>

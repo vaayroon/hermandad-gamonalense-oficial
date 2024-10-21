@@ -4,6 +4,8 @@ import { ViewTransitions } from "astro:transitions"
 import SmokeBackground from '@/components/SmokeBackground.astro';
 import '@@/fonts/ponsiroundedslab/stylesheet.css'
 import '@fontsource-variable/jost';
+import Sponsors from "@/sections/Sponsors.astro";
+import Footer from "@/sections/Footer.astro";
 
 interface Props {
 	description: string;
@@ -61,6 +63,8 @@ const { title, description } = Astro.props;
 		<SmokeBackground />
 		<div class="max-w-6xl px-2 lg:px-10 pt-20 mx-auto">
 			<slot />
+			<!-- <Sponsors /> -->
+			<Footer />
 		</div>
 	</body>
 </html>
