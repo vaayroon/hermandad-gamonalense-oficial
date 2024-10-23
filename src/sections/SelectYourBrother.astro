@@ -39,7 +39,7 @@ const brotherColumns = [
 		Conoce los detalles de cada hermano
 	</Typography>
 
-	<div class="mt-8 flex flex-col items-center justify-center gap-8 md:mt-32 md:flex-row lg:mt-0">
+	<div class="min-h-[800px] mt-8 flex flex-col items-center justify-center gap-8 md:mt-32 md:flex-row lg:mt-0">
 		<article
 			class="relative flex w-full max-w-[70%] flex-col items-center justify-center md:absolute md:max-w-full lg:-mt-32"
 		>
@@ -138,7 +138,7 @@ const brotherColumns = [
 						// get all images and preload them
 						brotherLinks.forEach((link) => {
 							const { id } = link.dataset
-							const brotherSrc = `https://cdn.lavelada.dev/brothers/${id}-big`
+							const brotherSrc = `img/brothers/${id}-big`
 							// create link preload for each image for webp
 							const preloadLink = document.createElement("link")
 							preloadLink.rel = "preload"
@@ -213,11 +213,11 @@ const brotherColumns = [
 				history.replaceState({}, "", `?brother=${id}`)
 			}
 
-			const brotherSrc = `https://cdn.lavelada.dev/brothers/${id}-big`
+			const brotherSrc = `img/brothers/${id}-big`
 
 			brotherPhoto.getElementsByTagName("img")[0].src = `${brotherSrc}.webp`
 			brotherTitle.innerHTML = spanNames
-			brotherCountry.src = `https://cdn.lavelada.dev/flags/${country}.webp`
+			brotherCountry.src = `/flags/${country}.webp`
 			brotherPhoto.getElementsByTagName("img")[0].alt = `Fotografía de ${name}`
 
 			brotherCountry.alt = `Bandera de ${countryName}`

@@ -4,49 +4,33 @@ import { ViewTransitions } from "astro:transitions"
 import SmokeBackground from '@/components/SmokeBackground.astro';
 import '@@/fonts/ponsiroundedslab/stylesheet.css'
 import '@fontsource-variable/jost';
+import type { Preload } from "@/types/Preload"
 import Sponsors from "@/sections/Sponsors.astro";
 import Footer from "@/sections/Footer.astro";
+import SEO from "@/components/SEO.astro";
 
 interface Props {
 	description: string;
 	title: string;
+	preload?: Array<Preload>
+	canonical?: string
+	image?: string
 }
 
-const { title, description } = Astro.props;
+const { title, description, preload, canonical, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<title>{title}</title>
-
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="canonical" href="https://hermandad-gamonalense-oficial.vercel.app">
-		<meta name="viewport" content="width=device-width" />
-
-		<meta name="keywords" content="huayucachi, gamonales, chinchilpos, patronal, zumbanacuy, vaayroon" />
-
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@infoHermandadGamonalense" />
-		<meta name="twitter:creator" content="@ChinchilposYGamonales" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="/og.jpg" />
-
-		<meta name="og:image" content="/og.jpg" />
-		<meta name="og:title" content={title} />
-		<meta name="og:description" content={description} />
-		<meta name="og:url" content="https://hermandad-gamonalense-oficial.vercel.app" />
-		<meta name="og:site_name" content="Hermandad Gamonalense" />
-		<meta name="og:type" content="website" />
-		<meta name="og:locale" content="es_PE" />
-
-		<meta name="robots" content="index, follow" />
-		<meta name="googlebot" content="index, follow" />
-
+		<SEO
+			canonical={canonical}
+			description={description}
+			image={image}
+			preload={preload}
+			title={title}
+		/>
+		<ViewTransitions />
 		<script is:inline>
 			window.getThemePreference = () => {
 				const localItem = typeof localStorage !== "undefined" && localStorage.getItem("theme")
@@ -57,7 +41,6 @@ const { title, description } = Astro.props;
 			const isDark = window.getThemePreference() === "dark"
 			document.documentElement.classList.toggle("dark", isDark)
 		</script>
-		<ViewTransitions />
 	</head>
 	<body>
 		<SmokeBackground />

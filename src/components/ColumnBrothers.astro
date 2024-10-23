@@ -12,7 +12,7 @@ interface Props {
 
 const { brothers: brothers, class: className = "", selectedBrother: selectedBrother, imgLoading } = Astro.props
 
-/* const isAlly = (id: Brother["id"]) => selectedBoxer.allies?.includes(id)
+/* const isAlly = (id: Brother["id"]) => selectedBrother.allies?.includes(id)
 
 const hasSameOpponents = (selectedBrotherOpponents: string[], opponents: string[]) => {
 	return selectedBrotherOpponents.every((sBrotherOpponent) => opponents.includes(sBrotherOpponent))
@@ -122,7 +122,7 @@ const isOpponent = () => false;
 		}
 
 		&::after {
-			content: "versus";
+			content: "";
 			@apply pointer-events-none absolute bottom-0 z-50 font-hermandadponsslab text-2xl text-red-500;
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 		}
