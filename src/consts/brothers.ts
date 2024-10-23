@@ -42,11 +42,11 @@ export const BROTHERS: Brother[] = addGetters([
 		},
 		clips: [
 			{
-				text: "El combate lo verá mi madre. Voy a ir con todo, voy a ganar",
+				text: "They don not know me son",
 				url: "",
 			},
 			{
-				text: "Cuanto más alto, más fácil va a ser que le entre un gancho",
+				text: "Algunos personajes no van en la pelicula",
 				url: "",
 			},
 		],
@@ -72,11 +72,11 @@ export const BROTHERS: Brother[] = addGetters([
 		},
 		clips: [
 			{
-				text: "El combate lo verá mi madre. Voy a ir con todo, voy a ganar",
+				text: "Cuanto mas grande el reto, mas grande la gloria",
 				url: "",
 			},
 			{
-				text: "Cuanto más alto, más fácil va a ser que le entre un gancho",
+				text: "Ganar, ganar, ganar y ganar",
 				url: "",
 			},
 		],
