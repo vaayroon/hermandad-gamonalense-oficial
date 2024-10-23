@@ -1,0 +1,93 @@
+---
+import { BROTHERS } from "@/consts/brothers"
+
+/** https://developers.google.com/search/docs/appearance/structured-data/organization */
+const organizationSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"url": "https://hermandad-gamonalense-oficial.vercel.app/",
+	"image": "img/HG.jpg",
+	"sameAs": [
+		"https://www.facebook.com/profile.php?id=61565043432026",
+		"https://github.com/vaayroon/hermandad-gamonalense-oficial",
+	],
+	"logo": "img/HG.jpg",
+	"name": "Hermanda Gamonalense",
+	"alternateName": "Chinchilpos y Gamonales",
+	"description":
+		"Web Oficial de La Hermandad Gamonalense, grupo del bando de los Gamonales de la fiesta Chinchilpos y Gamonales. Fiesta en honor a Tayta Niño, Huayucachi. Desarrollado por Bryan Kevin Condor Romero",
+}
+
+/** https://developers.google.com/search/docs/appearance/structured-data/event */
+const eventSchema = {
+	"@context": "https://schema.org",
+	"@type": "Event",
+	"name": "Hermandad Gamonalense",
+	"startDate": "2025-01-26T10:00:00",
+	"endDate": "2025-01-27T22:00:00",
+	"eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode", // https://schema.org/EventAttendanceModeEnumeration
+	"eventStatus": "https://schema.org/EventScheduled", // https://schema.org/EventStatusType
+	"location": {
+		"@type": "Place",
+		"name": "Huayucachi, Perú",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "C. Real, Huayucachi 12408, Perú",
+			"addressLocality": "Huayucachi",
+			"postalCode": "12408",
+			"addressRegion": "Huancayo",
+			"addressCountry": "PE",
+		},
+	},
+	"image": ["img/HG.jpg"],
+	"description":
+		"Fiesta Chinchilpos y Gamonales en honor a Tayta Niño patron de Huayucachi, Huancayo, Perú.",
+	/* "offers": {}, // Añadir cuando las entradas estén disponibles https://schema.org/Offer */
+	"performer": BROTHERS.map(({ name }) => ({
+		"@type": "Person",
+		"name": name,
+	})),
+	"organizer": {
+		"@type": "Person",
+		"name": "Americo Romero Peralta",
+		"url": "https://www.twitch.tv/vaayroontv",
+	},
+}
+
+const FAQs = [
+	{
+		question: "¿Quienes pertenecen a la Hermandad Gamonalense y participaran en este edición?",
+		answer: `Los hermanos de esta edición serán: ${BROTHERS.map(({ name }) => name).join(", ")}`,
+	},
+	{
+		question: "¿Cuándo tendrá lugar Chinchilpos y Gamonales 2025?",
+		answer:
+			"Chinchilpos y Gamonales 2025 tendrá lugar el <strong>26 y 27 de enero de 2025</strong> en el pueblo de Huayucachi, Huancayo, Perú",
+	},
+	{
+		question: "¿Dónde tendrá lugar Chinchilpos y Gamonales 2025?",
+		answer:
+			"Chinchilpos y Gamonales 2025 tendrá lugar el 26 y 27 de enero de 2025 en el pueblo de <strong>Huayucachi, Huancayo, Perú</strong>",
+	},
+]
+
+/** https://developers.google.com/search/docs/appearance/structured-data/faqpage */
+const FAQSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+		FAQs.map(({ answer, question }) => ({
+			"@type": "Question",
+			"name": question,
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": answer,
+			},
+		})),
+	],
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(FAQSchema)} />
