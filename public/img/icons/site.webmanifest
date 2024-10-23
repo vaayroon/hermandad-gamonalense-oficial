@@ -1,0 +1,22 @@
+{
+  "name": "Hermandad Gamonalense",
+  "short_name": "HG",
+  "description": "Web Oficial de La Hermandad Gamonalense, grupo del bando de los Gamonales de la fiesta Chinchilpos y Gamonales. Fiesta en honor a Tayta Niño, Huayucachi. Desarrollado por Bryan Kevin Condor Romero",
+  "theme_color": "#26dce4",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/icons/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

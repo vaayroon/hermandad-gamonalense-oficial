@@ -29,6 +29,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+pnpm-debug.log*
 .pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -211,3 +212,12 @@ $RECYCLE.BIN/
 
 # jetbrains setting folder
 .idea/
+
+# vercel build output
+.vercel/
+.vercel
+
+# packages
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
