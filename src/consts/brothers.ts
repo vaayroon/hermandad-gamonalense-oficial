@@ -53,7 +53,7 @@ export const BROTHERS: Brother[] = addGetters([
 	},
 	{
 		id: "panocondorlopez",
-		name: "Pequeño Tullico",
+		name: "Pequeño Tuyico",
 		realName: "Sthephano Condor Lopez",
 		birthDate: new Date(2001, 9, 19),
 		height: 1.75,

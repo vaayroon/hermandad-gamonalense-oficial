@@ -1,0 +1,42 @@
+---
+import ThemeToogle from "@/components/ThemeToogle.astro";
+import Facebook from "@/icons/facebook.astro";
+import Github from "@/icons/github.astro";
+---
+
+<nav class:list={`${Astro.props.class}`}>
+	<ul
+		class="flex flex-row items-center gap-x-6"
+		aria-label="redes sociales y botón para alternar tema"
+	>
+		<li>
+			<a
+				target="_blank"
+				rel="noopener"
+				aria-label="Facebook de La Hermandad Gamonalense, se abrirá en una nueva pestaña"
+				href="https://www.facebook.com/profile.php?id=61565043432026"
+				class="inline-block any-hover:scale-125 any-hover:opacity-70 motion-safe:transition motion-reduce:any-hover:scale-100"
+			>
+				<Facebook
+					class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"
+				/>
+			</a>
+		</li>
+		<li>
+			<a
+				target="_blank"
+				rel="noopener"
+				aria-label="Github de La Hermandad Gamonalense, se abrirá en una nueva pestaña"
+				href="https://github.com/vaayroon/hermandad-gamonalense-oficial"
+				class="inline-block any-hover:scale-125 any-hover:opacity-70 motion-safe:transition motion-reduce:any-hover:scale-100"
+			>
+				<Github
+					class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"
+				/>
+			</a>
+		</li>
+		<li>
+      <ThemeToogle />
+		</li>
+	</ul>
+</nav>

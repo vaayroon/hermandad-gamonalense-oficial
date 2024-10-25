@@ -8,6 +8,7 @@ import type { Preload } from "@/types/Preload"
 import Sponsors from "@/sections/Sponsors.astro";
 import Footer from "@/sections/Footer.astro";
 import SEO from "@/components/SEO.astro";
+import Header from "@/components/Header.astro";
 
 interface Props {
 	description: string;
@@ -44,6 +45,7 @@ const { title, description, preload, canonical, image } = Astro.props;
 	</head>
 	<body>
 		<SmokeBackground />
+		<Header />
 		<div class="max-w-6xl px-2 lg:px-10 pt-20 mx-auto">
 			<slot />
 			<!-- <Sponsors /> -->
@@ -57,6 +59,7 @@ const { title, description, preload, canonical, image } = Astro.props;
 		--color-secondary: #dddddd;
 		--background-color: var(--color-secondary);
 		--background-twitch: var(--color-twitch-ice);
+		--color-primary-400: #26dce4;
 		--color-twitch: #9146ff;
 		--color-twitch-ice: #f0f0ff;
 	}

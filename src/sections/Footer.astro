@@ -1,4 +1,6 @@
 ---
+import FooterContent from "@/components/FooterContent.astro";
+import SocialButtons from "@/components/SocialButtons.astro";
 import ThemeToogle from "@/components/ThemeToogle.astro";
 import Facebook from "@/icons/facebook.astro";
 import Github from "@/icons/github.astro";
@@ -6,37 +8,15 @@ import Instagram from "@/icons/instagram.astro";
 ---
 
 <footer
-  class="mt-20 w-full border-primary border-t-2 flex flex-col md:flex-row justify-center items-center md:justify-between pt-6 pb-20 gap-y-10"
+  class="relative mt-20 w-full flex flex-col md:flex-row justify-center items-center md:justify-between pt-14 md:pt-16 pb-20 gap-y-10"
 >
-  <span class="text-primary text-center">
-    @ 2024 Hermandad Gamonalense <span aria-hidden class="hidden md:inline"
-      >|</span
-    ><br aria-hidden class="block md:hidden" /> Todos los derechos reservados.
-  </span>
-
-  <ul class="flex flex-row gap-x-6 items-center">
-    <li>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.facebook.com/profile.php?id=61565043432026"
-        class="hover:scale-125 hover:opacity-70 transition inline-block"
-      >
-        <Facebook class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"/>
-      </a>
-    </li>
-    <li>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://github.com/vaayroon/hermandad-gamonalense-oficial"
-        class="hover:scale-125 hover:opacity-70 transition inline-block"
-      >
-        <Github class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"/>
-      </a>
-    </li>
-    <li>
-      <ThemeToogle />
-    </li>
-  </ul>
+  <hr
+    class="absolute top-0 h-[2px] w-full min-w-[18rem] border-t-0 bg-transparent bg-gradient-to-r from-transparent via-primary-400 to-transparent bg-center md:my-9"
+  />
+  <FooterContent />
+  <hr
+		aria-hidden="true"
+		class="my-12 h-[2px] w-full min-w-[18rem] border-t-0 bg-transparent bg-gradient-to-r from-transparent via-primary-400 to-transparent bg-center md:hidden"
+	/>
+  <SocialButtons />
 </footer>
