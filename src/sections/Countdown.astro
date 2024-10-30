@@ -1,96 +1,181 @@
 ---
+import Date from "@/components/Date.astro";
+import Typography from "@/components/Typography.astro";
+import { EVENT_TIMESTAMP } from "@/consts/event-date";
 import Hermandad from "@/icons/hermandad.astro";
 import Zumba from "@/icons/zumba.astro";
-
-const TIMESTAMP_END = 1737990000000;
 ---
 
-<section class="my-32 flex flex-col gap-y-10 justify-center items-center">
+<section
+  class="mt-20 flex flex-col place-items-center gap-y-10 md:mt-60"
+  aria-label="cuenta atrás"
+>
   <div class="relative">
     <Zumba class="absolute text-primary-400 animate-fade-in-up w-[200px] md:w-[400px] h-auto" />
     <Hermandad class="grayscale w-[200px] md:w-[400px] h-auto" />
   </div>
 
   <div
-    class="flex flex-rom gap-x-1 text-primary-500 uppercase font-semibold"
-    data-date={TIMESTAMP_END}
+    class="grid w-full select-none grid-cols-3 flex-col items-center justify-center gap-y-20 uppercase text-primary md:gap-x-6 md:gap-y-11"
+    data-date={EVENT_TIMESTAMP}
+    role="timer"
   >
-    <div class="flex flex-col justify-center items-center gap-y-2 w-16">
-      <span class="text-4xl tabular-nums" data-days>000</span>
-      <span class="text-xs text-center text-primary">Días</span>
-    </div>
+    <Date
+      dateType="Días"
+      attribute={{ "data-days": "" }}
+      position="col-span-3"
+      className="text-7xl text-accent md:text-[20rem]"
+      wrapperClassName="my-8 md:my-0 md:-mt-16"
+      height={"h-[3.80rem] md:h-[20rem]"}
+      max={129}
+    />
 
-    <span aria-hidden="true" class="mt-1 text-xl">:</span>
+    <Date
+      wrapperClassName="my-8"
+      dateType="Horas"
+      attribute={{ "data-hours": "" }}
+      className="text-7xl text-accent"
+      height={"h-[3.80rem]"}
+      max={23}
+    />
 
-    <div class="flex flex-col justify-center items-center gap-y-2 w-16">
-      <span class="text-4xl tabular-nums" data-hours>00</span>
-      <span class="text-xs text-center text-primary">Horas</span>
-    </div>
+    <Date
+      wrapperClassName="my-8"
+      dateType="Minutos"
+      attribute={{ "data-minutes": "" }}
+      className="text-7xl text-accent"
+      height={"h-[3.80rem]"}
+      max={59}
+    />
 
-    <span aria-hidden="true" class="mt-1 text-xl">:</span>
-
-    
-    <div class="flex flex-col justify-center items-center gap-y-2 w-16">
-      <span class="text-4xl tabular-nums" data-minutes>00</span>
-      <span class="text-xs text-center text-primary">Minutos</span>
-    </div>
-
-    <span aria-hidden="true" class="mt-1 text-xl">:</span>
-
-    
-    <div class="flex flex-col justify-center items-center gap-y-2 w-16">
-      <span class="text-4xl tabular-nums" data-seconds>00</span>
-      <span class="text-xs text-center text-primary">Segundos</span>
-    </div>
+    <Date
+      wrapperClassName="my-8"
+      dateType="Segundos"
+      attribute={{ "data-seconds": "" }}
+      className="text-7xl text-accent"
+      height={"h-[3.80rem]"}
+      max={59}
+    />
   </div>
 </section>
 
 <script>
-  const SECOND = 1000;
-  const MINUTE = SECOND * 60;
-  const HOUR = MINUTE * 60;
-  const DAY = HOUR * 24;
+  import createCountdown from "@/lib/countdown";
+  import { $ } from "@/lib/dom-selector";
 
-  function init() {
-    const $countdown = document.querySelector("[data-date]");
+  function initCountdown() {
+    const $countdown = $("[data-date]");
     if (!$countdown) return;
 
-    const $days = $countdown.querySelector("[data-days]");
-    const $hours = $countdown.querySelector("[data-hours]");
-    const $minutes = $countdown.querySelector("[data-minutes]");
-    const $seconds = $countdown.querySelector("[data-seconds]");
+    const $days = {
+      firstDigit: $("[data-days] [data-first-group]", $countdown),
+      secondDigit: $("[data-days] [data-second-group]", $countdown),
+      thirdDigit: $("[data-days] [data-third-group]", $countdown),
+    };
+    const $hours = {
+      firstDigit: $("[data-hours] [data-first-group]", $countdown),
+      secondDigit: $("[data-hours] [data-second-group]", $countdown),
+    };
+    const $minutes = {
+      firstDigit: $("[data-minutes] [data-first-group]", $countdown),
+      secondDigit: $("[data-minutes] [data-second-group]", $countdown),
+    };
+    const $seconds = {
+      firstDigit: $("[data-seconds] [data-first-group]", $countdown),
+      secondDigit: $("[data-seconds] [data-second-group]", $countdown),
+    };
+    const timestamp = Number($countdown?.getAttribute("data-date") ?? 0);
+    const countdown = createCountdown(timestamp, {
+      onTick({ days, hours, minutes, seconds }) {
+        if (
+          $days.firstDigit instanceof HTMLElement &&
+          $days.secondDigit instanceof HTMLElement &&
+          $days.thirdDigit instanceof HTMLElement
+        ) {
+          switch (days.length) {
+            case 3:
+              animateDigit($days.firstDigit, days[0], "day");
+              animateDigit($days.secondDigit, days[1], "day");
+              animateDigit($days.thirdDigit, days[2], "day");
+              break;
+            case 2:
+              $days.firstDigit.parentNode?.removeChild($days.firstDigit);
+              animateDigit($days.secondDigit, days[0], "day");
+              animateDigit($days.thirdDigit, days[1], "day");
+              break;
+            default:
+              $days.secondDigit.parentNode?.removeChild($days.secondDigit);
+              animateDigit($days.thirdDigit, days[0], "day");
+          }
+        }
 
-    const timestamp = $countdown.getAttribute("data-date");
-    if (!timestamp) return;
+        if (
+          $hours.firstDigit instanceof HTMLElement &&
+          $hours.secondDigit instanceof HTMLElement
+        ) {
+          animateDigit($hours.firstDigit, hours[0], "hour");
+          animateDigit($hours.secondDigit, hours[1], "hour");
+        }
 
-    const date = new Date(+timestamp).getTime();
+        if (
+          $minutes.firstDigit instanceof HTMLElement &&
+          $minutes.secondDigit instanceof HTMLElement
+        ) {
+          animateDigit($minutes.firstDigit, minutes[0], "minute");
+          animateDigit($minutes.secondDigit, minutes[1], "minute");
+        }
 
-    const formatTime = (time:number) => {
-      return Math.floor(time).toString().padStart(2, "0");
-    }
+        if (
+          $seconds.firstDigit instanceof HTMLElement &&
+          $seconds.secondDigit instanceof HTMLElement
+        ) {
+          animateDigit($seconds.firstDigit, seconds[0], "second");
+          animateDigit($seconds.secondDigit, seconds[1], "second");
+        }
+      },
 
-    function updateCountdown() {
-      const now = Date.now();
-      const distance = date - now;
+      onComplete() {
+        $(".countdown-text")?.remove();
 
-      const days = formatTime(distance / DAY);
-      const hours = formatTime((distance % DAY) / HOUR);
-      const minutes = formatTime((distance % HOUR) / MINUTE);
-      const seconds = formatTime((distance % MINUTE) / SECOND);
+        if (!$countdown) return;
 
-      if ($days instanceof HTMLElement)
-        $days.innerText = days.toString();
-      if ($hours instanceof HTMLElement)
-        $hours.innerText = hours.toString();
-      if ($minutes instanceof HTMLElement)
-        $minutes.innerText = minutes.toString();
-      if ($seconds instanceof HTMLElement)
-        $seconds.innerText = seconds.toString();
-    }
+        $countdown.innerHTML = "¡El evento de presentación ha empezado! 🎉";
+        $countdown.className =
+          "text-primary uppercase font-semibold animate-fade-in text-3xl text-center";
+      },
+    });
 
-    setInterval(updateCountdown, SECOND);
-    updateCountdown();
+    return countdown;
   }
 
-  init();
+  function animateDigit(group: HTMLElement, value: string, type: string) {
+    const wrapper = $("[data-wrapper]", group);
+    const num = $(`[data-num="${value}"]`, group);
+    const xnum = $("[data-num-x0]", group); // 0 añadido para la animación
+
+    if (
+      wrapper instanceof HTMLElement &&
+      num instanceof HTMLElement &&
+      xnum instanceof HTMLElement
+    ) {
+      wrapper.style.transform = `translateY(-${num.offsetTop}px)`;
+
+      // Cuando cambie, volver arriba
+      if (value === "0") {
+        setTimeout(() => {
+          wrapper.classList.toggle("duration-[800ms]", false);
+          wrapper.classList.toggle("transition-transform", false);
+          wrapper.style.transform = `translateY(-${xnum.offsetTop}px)`;
+        }, 800);
+      } else {
+        wrapper.classList.toggle("duration-[800ms]", true);
+        wrapper.classList.toggle("transition-transform", true);
+      }
+    }
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const countdown = initCountdown();
+    countdown && countdown.start();
+  });
 </script>
