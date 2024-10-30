@@ -10,7 +10,6 @@ import Hermandad from '@/icons/hermandad.astro';
 const { pathname } = Astro.url
 const normalizedPathName =
 pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
-console.log("🚀 ~ normalizedPathName:", normalizedPathName)
 
 const pages = [
 	{ name: "Negros Mayores", href: "/negros-mayores", target: "_self", active: normalizedPathName === "/negros-mayores" },
@@ -21,8 +20,6 @@ const pages = [
 	...page,
 	active: page.active ?? normalizedPathName === page.href,
 }))
-
-const isCombatIntern = normalizedPathName.startsWith("/combates/")
 ---
 
 <header class="mb-24 h-16 max-w-[100vw] lg:h-24">
