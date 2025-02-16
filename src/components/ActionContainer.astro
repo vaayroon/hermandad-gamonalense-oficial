@@ -1,0 +1,33 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
+
+const { as: Tag = "div", class: className, ...props } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "relative overflow-x-auto",
+    "overflow-y-hidden",
+    "scrollbar-thin",
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</Tag>
+
+<style>
+  /* Custom scrollbar styling */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 20px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--color-primary-400);
+    border-radius: 10px;
+  }
+</style>
