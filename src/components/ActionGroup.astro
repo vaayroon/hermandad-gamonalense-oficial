@@ -1,0 +1,85 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{
+  as: Tag;
+  label: string;
+  position?: "left" | "right";
+}>;
+
+const {
+  as: Tag = "div",
+  label,
+  position = "right",
+  class: className,
+  ...props
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "relative group scrollContainer inline-block",
+    "inline-block skew-x-[-21deg] cursor-pointer border-2 border-primary-400",
+    "font-semibold uppercase",
+    "px-5 py-2.5",
+    "before:absolute before:-inset-0.5 before:origin-right before:scale-x-0 before:bg-primary-400",
+    "overflow-y-hidden overflow-x-hidden",
+    "hover:overflow-y-auto hover:border-none",
+    "ease-in motion-safe:transition-[color,transform]",
+  ]}
+  {...props}
+>
+  <span class="group-hover:invisible group-hover:opacity-0 inline-block skew-x-[21deg]">
+    {label}
+  </span>
+
+  <div
+    class:list={[
+      "absolute top-0 left-56 skew-x-0 invisible opacity-0 overflow-x-hidden overflow-y-hidden",
+      "group-hover:left-0 group-hover:right-1 group-hover:visible group-hover:opacity-100",
+      position === "left" ? "left-0" : "right-0",
+    ]}
+  >
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  .group::-webkit-scrollbar {
+    width: 20px;
+  }
+  .group::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .group::-webkit-scrollbar-thumb {
+    background: var(--color-primary-400);
+    border-radius: 10px;
+  }
+</style>
+
+<script>
+  class ScrollHandler {
+    element: HTMLElement;
+    scrollSensitivity: number;
+
+    constructor(element: HTMLElement ) {
+      this.element = element;
+      this.scrollSensitivity = 0.15;
+      this.addEventListeners();
+    }
+
+    addEventListeners() {
+      this.element.addEventListener('wheel', this.handleWheel.bind(this));
+    }
+
+    handleWheel(e: WheelEvent) {
+      e.preventDefault();
+      this.element.scrollTop += e.deltaY * this.scrollSensitivity;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollContainers = document.querySelectorAll('.scrollContainer');
+    scrollContainers.forEach(container => new ScrollHandler(container as HTMLElement));
+  });
+</script>
