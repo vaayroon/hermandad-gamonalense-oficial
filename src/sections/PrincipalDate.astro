@@ -1,5 +1,7 @@
 ---
 import Action from "@/components/Action.astro";
+import ActionContainer from "@/components/ActionContainer.astro";
+import ActionGroup from "@/components/ActionGroup.astro";
 import CalendarButton from "@/components/CalendarButton.astro";
 import Typography from "@/components/Typography.astro";
 import MapMarker from "@/icons/map-marker.astro";
@@ -10,6 +12,7 @@ import MapMarker from "@/icons/map-marker.astro";
 >
   <header class="text-3xl font-semibold uppercase md:text-5xl">
     <time class="date inline-block"></time>
+    <time class="year inline-block"></time>
     <span class="date-time-separator hidden">
       <span aria-hidden="true" class="mx-1 hidden md:inline">·</span>
       <br aria-hidden="true" class="block md:hidden" />
@@ -21,23 +24,28 @@ import MapMarker from "@/icons/map-marker.astro";
     as="h2"
     variant="h2"
     color="primary"
-    class:list={"underline-transition mt-6 flex max-w-sm flex-col transition-all duration-300 ease-in-out hover:text-primary-400 motion-reduce:transition-none"}
+    class:list={"group hover:text-primary-400 underline-transition mt-6 flex max-w-sm flex-col transition-all duration-300 ease-in-out motion-reduce:transition-none"}
   >
-    <span>Chinchilpos y Gamonales</span>
     <a
-      class="flex"
+      class="flex flex-col"
       href="https://maps.app.goo.gl/zV19x6i4hoKyHV1V7"
       target="_blank"
       rel="noopener"
       aria-label="Ubicación de la plaza principal de Huayucachi se abrirá en una nueva pestaña"
     >
-      <MapMarker class="mr-1 max-md:mt-1 md:mt-0.5 md:size-6" /> Huayucachi (Estadio
-      municipal)
+      <span>Tayta Niño</span>
+      <span>Chinchilpos y Gamonales</span>
+      <span
+        class="flex flex-row justify-center"
+      >
+        <MapMarker class="mr-1 max-md:mt-1 md:mt-0.5 md:size-6"/>
+        Huayucachi
+      </span>
     </a>
   </Typography>
 
   <footer
-    class="scroll-horizontal items-top mt-6 flex flex-col flex-wrap justify-center gap-9 md:flex-row"
+    class="scroll-horizontal items-top mt-6 flex flex-col flex-wrap justify-center items-center content-center gap-9 "
   >
     <!-- <div>
 			<Action
@@ -52,18 +60,89 @@ import MapMarker from "@/icons/map-marker.astro";
 				Ir a la tienda oficial
 			</Action>
 		</div> -->
-    <div>
-      <Action
-        class="w-full text-base"
-        as="a"
-        href="https://www.youtube.com/watch?v=UTWO1rgo2W4"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Ir a la tienda oficial, se abrirá en una nueva pestaña"
+    <ActionContainer
+      class="w-96 lg:w-full flex justify-start items-center px-6 pb-4 gap-x-5"
+    >
+      <ActionGroup
+        class="w-full text-sm"
+        label="Edición 2025"
       >
-        Edición 2024
-      </Action>
-    </div>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=RKBu2EkJdvM"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al zumbanacuy del día 1, se abrirá en una nueva pestaña"
+        >
+          Zumba Día 1
+        </Action>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=AGSY91m7FuA"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al zumbanacuy del día 2, se abrirá en una nueva pestaña"
+        >
+          Zumba Día 2
+        </Action>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=NhGwWmPSVCE"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al desfile, se abrirá en una nueva pestaña"
+        >
+          Fútbol
+        </Action>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=KPinAvAyVFw"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al desfile, se abrirá en una nueva pestaña"
+        >
+          Desfile
+        </Action>
+      </ActionGroup>
+      <ActionGroup
+        label="Edición 2024"
+      >
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=UTWO1rgo2W4"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al zumbanacuy del día 2, se abrirá en una nueva pestaña"
+        >
+          Zumba
+        </Action>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=4_r4ZLrQUhk"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al desfile, se abrirá en una nueva pestaña"
+        >
+          Fútbol
+        </Action>
+        <Action
+          class="w-full text-sm skew-x-[0deg]"
+          as="a"
+          href="https://www.youtube.com/watch?v=lLDaFTvi-rg"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ir al desfile, se abrirá en una nueva pestaña"
+        >
+          Desfile
+        </Action>
+      </ActionGroup>
+    </ActionContainer>
     <div>
       <CalendarButton />
     </div>
@@ -78,7 +157,16 @@ import MapMarker from "@/icons/map-marker.astro";
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
-  // Formatea la fecha del evento considerando la zona horaria del usuario
+  function formatEventYear(timestamp: number, timeZone: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      timeZone,
+    };
+    return new Intl.DateTimeFormat("es-PE", options).format(
+      new Date(timestamp)
+    );
+  }
+
   function formatEventDate(timestamp: number, timeZone: string): string {
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
@@ -90,7 +178,6 @@ import MapMarker from "@/icons/map-marker.astro";
     );
   }
 
-  // Formatea la hora del evento con el nombre de la zona horaria, ajustándose al formato de 24 horas
   function formatEventTimeWithTimeZoneName(
     timestamp: number,
     timeZone: string
@@ -114,7 +201,6 @@ import MapMarker from "@/icons/map-marker.astro";
     return `${formattedTime} ${timeZoneName}`;
   }
 
-  // Genera un datetime válido para el atributo 'datetime' del elemento <time>, respetando la zona horaria
   function formatValidDatetime(timestamp: number, timeZone: string): string {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -132,6 +218,7 @@ import MapMarker from "@/icons/map-marker.astro";
   }
 
   function updateUI(
+    yearString: string,
     dateString: string,
     timeString: string,
     validDatetime: string,
@@ -141,9 +228,15 @@ import MapMarker from "@/icons/map-marker.astro";
       showTime?: boolean;
     }
   ) {
+    const $yearSpan = $(".year");
     const $dateSpan = $(".date");
     const $timeSpan = $(".time");
     const $dateSeparator = $(".date-time-separator");
+
+    if ($yearSpan != null) {
+      $yearSpan.innerHTML = yearString;
+      $yearSpan.setAttribute("datetime", validDatetime);
+    }
 
     if ($dateSpan != null) {
       $dateSpan.innerHTML = dateString;
@@ -160,6 +253,7 @@ import MapMarker from "@/icons/map-marker.astro";
 
   function main() {
     const USER_TZ = getUserTimeZone();
+    const formattedYear = formatEventYear(EVENT_TIMESTAMP, USER_TZ);
     const formattedDate = formatEventDate(EVENT_TIMESTAMP, USER_TZ);
     const formattedTime = formatEventTimeWithTimeZoneName(
       EVENT_TIMESTAMP,
@@ -167,14 +261,13 @@ import MapMarker from "@/icons/map-marker.astro";
     );
     const validDatetime = formatValidDatetime(EVENT_TIMESTAMP, USER_TZ);
 
-    updateUI(formattedDate, formattedTime, validDatetime, {
+    updateUI(formattedYear, formattedDate, formattedTime, validDatetime, {
       showTime: true,
     });
   }
 
   document.addEventListener("astro:page-load", main);
 
-  // Verifica si el evento ya ha pasado
   const eventHasPassed = EVENT_TIMESTAMP < Date.now();
   if (eventHasPassed) {
     const addToCalendarBtn = $("#add-to-calendar");
