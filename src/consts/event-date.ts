@@ -1,4 +1,4 @@
-export const EVENT_TIMESTAMP =  1737990000000
+export const EVENT_TIMESTAMP =  1769346000000
 
 export const timeZoneAbbreviations: { [key: string]: string } = {
 	// North America, including specific zones for Mexico
