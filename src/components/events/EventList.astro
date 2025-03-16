@@ -1,0 +1,33 @@
+---
+import type { Event } from '../../types/events';
+import EventCard from './EventCard.astro';
+import EventGallery from './EventGallery.astro';
+
+interface Props {
+  events: Event[];
+}
+
+const { events } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {events.map(event => (
+    <EventCard event={event} />
+  ))}
+</div>
+
+<script>
+  document.addEventListener('filterEvents', (e: Event) => {
+    const customEvent = e as CustomEvent;
+    const category = customEvent.detail;
+    const cards = document.querySelectorAll<HTMLElement>('[data-categorycards]');
+    
+    cards.forEach(card => {
+      if (category === 'todos' || card.dataset.categorycards === category) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>

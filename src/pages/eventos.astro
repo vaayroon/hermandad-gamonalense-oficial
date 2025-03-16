@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EventFilter from '../components/events/EventFilter.astro';
+import EventList from '../components/events/EventList.astro';
+import type { Event, Category } from '../types/events';
+import Hero from '@/sections/Hero.astro';
+
+const categories: Category[] = [
+  { id: 'todos', name: 'Todos los eventos' },
+  { id: 'principal', name: 'Eventos Principales' },
+  { id: 'institucional', name: 'Eventos Institucionales' },
+  { id: 'social', name: 'Eventos Sociales' }
+];
+
+const events: Event[] = [
+  {
+    id: 1,
+    title: "Festividad Tayta Niño 2024",
+    date: "2024-07-15",
+    category: "principal",
+    description: "Celebración principal de la festividad del Tayta Niño en Huayucachi",
+    prioste: "Juan Pérez Mamani",
+    imageUrl: "https://scontent-bcn1-1.xx.fbcdn.net/v/t1.6435-9/74912295_107229990730130_4739625552212656128_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=1COMM7LDnUkQ7kNvgFJRQOM&_nc_oc=Adg2smWIzJa1t0eoAi-Ypqyfa9vUDaA4xNudpNNhThleDbPvupOkNzs-6DfR9lh6WFZtYchw1g6CmH-mb7TVOTXS&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=ADNtRt7AxTQ4IPzkkEvbf0P&oh=00_AYAPM7cMM-xnbPAJsSu1dVWht4iT0EE5Z6vpQ_yfE9bhCQ&oe=67E01A1A",
+    gallery: ["/images/gallery/event1-1.jpg", "/images/gallery/event1-2.jpg"]
+  },
+  {
+    id: 2,
+    title: "Aniversario de la Hermandad",
+    date: "2024-05-20",
+    category: "institucional",
+    description: "25° Aniversario de nuestra querida hermandad",
+    imageUrl: "https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/476610185_1148125423980553_8319415945465157033_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=khGe0TWDb30Q7kNvgGWLHyQ&_nc_oc=AdiBBK3zH62suqzAxUTbh3_PfoQyHO1_T6Mf8c63uBhIdiyNKAxLly1XNUNzfMtrF2CqQpbFX-iY3s17VVxue2RV&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=AVLZqXNV6aV9w0XfQXIOeMb&oh=00_AYB6C_4kxmgVOnh0WXVGdhUJcKXnc6ycc4rlgqv3s6O-Lg&oe=67BE4F02",
+    gallery: ["/images/gallery/aniv-1.jpg"]
+  },
+  {
+    id: 3,
+    title: "Matrimonio Hermano Juanito",
+    date: "2026-05-20",
+    category: "social",
+    description: "Matrimonio de nuestro hermando Juanito con Juanita",
+    imageUrl: "https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/476641690_1148133170646445_4552216106177949502_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=iw4qQG9PaK8Q7kNvgGYpWQr&_nc_oc=AdhP8j1F-LFaC0nnYC85F9z7ojg820D3xKJ39B86EZBgV0sWtXJTOc4vJeLbSnmxt1OL6oeOCHtSQxnGi_BsgjpK&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=AJofi_W45Q8i54pifn3XQN3&oh=00_AYDs_SYw8ZIrE6jdrrbInreOA1cpDW-_yKAwgGKPk5LiZQ&oe=67BE7796",
+    gallery: ["/images/gallery/aniv-1.jpg"]
+  }
+];
+---
+
+<Layout
+  title="Hermandad Gamonalense - Chinchilpos y Gamonales - 2025"
+  description="Grupo del bando de Gamonales de la fiesta patronal de Huayucachi, Chinchilpos y Gamonales. Zumbanacuy"
+  canonical="https://hermandad-gamonalense-oficial.vercel.app/"
+>
+  <main>
+    <EventFilter categories={categories} />
+    <EventList events={events} />
+  </main>
+</Layout>
