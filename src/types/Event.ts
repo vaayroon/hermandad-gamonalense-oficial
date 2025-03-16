@@ -2,14 +2,14 @@ export interface Event {
   id: number;
   title: string;
   date: string;
-  category: 'principal' | 'institucional' | 'social';
+  category: EventCategory;
   description: string;
   prioste?: string;
   imageUrl: string;
   gallery: string[];
 }
 
-export interface Category {
+export interface EventCategory {
   id: string;
   name: string;
 }

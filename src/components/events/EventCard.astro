@@ -1,5 +1,5 @@
 ---
-import type { Event } from '../../types/events';
+import type { Event } from '../../types/Event';
 
 interface Props {
   event: Event;
@@ -16,7 +16,7 @@ const formatDate = (dateString: string): string => {
 };
 ---
 
-<article class="bg-white rounded-lg shadow-md overflow-hidden" data-categorycards={event.category}>
+<article class="bg-white rounded-lg shadow-md overflow-hidden" data-categorycards={event.category.id}>
   <img
     src={event.imageUrl}
     alt={event.title}

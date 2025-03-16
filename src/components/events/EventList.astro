@@ -1,5 +1,5 @@
 ---
-import type { Event } from '../../types/events';
+import type { Event } from '../../types/Event';
 import EventCard from './EventCard.astro';
 import EventGallery from './EventGallery.astro';
 
@@ -17,13 +17,15 @@ const { events } = Astro.props;
 </div>
 
 <script>
+  import { EventCategories } from "@/consts/event-category";
+
   document.addEventListener('filterEvents', (e: Event) => {
     const customEvent = e as CustomEvent;
     const category = customEvent.detail;
     const cards = document.querySelectorAll<HTMLElement>('[data-categorycards]');
     
     cards.forEach(card => {
-      if (category === 'todos' || card.dataset.categorycards === category) {
+      if (category === EventCategories.All.id || card.dataset.categorycards === category) {
         card.style.display = 'block';
       } else {
         card.style.display = 'none';
