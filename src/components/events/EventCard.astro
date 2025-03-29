@@ -1,5 +1,6 @@
 ---
 import type { Event } from '../../types/Event';
+import EventCoverImage from './EventCoverImage.astro';
 
 interface Props {
   event: Event;
@@ -17,10 +18,11 @@ const formatDate = (dateString: string): string => {
 ---
 
 <article class="bg-white rounded-lg shadow-md overflow-hidden" data-categorycards={event.category.id}>
-  <img
-    src={event.imageUrl}
-    alt={event.title}
-    class="w-full h-48 object-cover"
+  <EventCoverImage
+    id={event.id}
+    category={event.category}
+    name={event.title}
+    loading="eager"
   />
   <div class="p-4">
     <h3 class="text-xl font-semibold mb-2">{event.title}</h3>
