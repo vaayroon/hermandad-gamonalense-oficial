@@ -138,7 +138,7 @@ const brotherColumns = [
 						// get all images and preload them
 						brotherLinks.forEach((link) => {
 							const { id } = link.dataset
-							const brotherSrc = `img/brothers/${id}-big`
+							const brotherSrc = `/img/brothers/${id}-big`
 							// create link preload for each image for webp
 							const preloadLink = document.createElement("link")
 							preloadLink.rel = "preload"
@@ -213,7 +213,7 @@ const brotherColumns = [
 				history.replaceState({}, "", `?brother=${id}`)
 			}
 
-			const brotherSrc = `img/brothers/${id}-big`
+			const brotherSrc = `/img/brothers/${id}-big`
 
 			brotherPhoto.getElementsByTagName("img")[0].src = `${brotherSrc}.webp`
 			brotherTitle.innerHTML = spanNames
