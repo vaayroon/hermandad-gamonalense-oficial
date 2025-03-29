@@ -1,5 +1,5 @@
 export interface Event {
-  id: number;
+  id: string;
   title: string;
   date: string;
   category: EventCategory;
@@ -12,4 +12,5 @@ export interface Event {
 export interface EventCategory {
   id: string;
   name: string;
+  urlname: string;
 }
