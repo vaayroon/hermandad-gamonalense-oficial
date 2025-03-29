@@ -1,0 +1,324 @@
+---
+import BrotherBigImage from "@/components/BrotherBigImage.astro"
+import ColumnBrothers from "@/components/ColumnBrothers.astro"
+import Typography from "@/components/Typography.astro"
+import { BROTHERS } from "@/consts/brothers"
+import { COUNTRIES } from "@/consts/countries"
+import HorizontalScroll from "@/icons/horizontalScroll.astro"
+
+const listOfBrothers = BROTHERS.map((brother) => {
+	const { country } = brother
+	const countryName = COUNTRIES[country]?.name || ""
+	return { ...brother, countryName }
+})
+
+const selectedBrotherId = Astro.url.searchParams.get("brother")
+const selectedBrother = listOfBrothers.find(({ id }) => id === selectedBrotherId) || listOfBrothers[0]
+
+// split in 4 columns
+const brotherColumns = [
+	listOfBrothers.slice(0, 6),
+	listOfBrothers.slice(6, 11),
+	listOfBrothers.slice(11, 16),
+	listOfBrothers.slice(16, 22),
+]
+---
+
+<section class="mb-20 mt-20 transform-gpu md:my-40">
+	<Typography
+		as="h3"
+		variant="hermandadponsslab-title"
+		color="primary400"
+		class:list={"text-center"}
+		id="selectedBrother"
+	>
+		Elige un Negro Mayor
+	</Typography>
+
+	<Typography as="p" variant="body" color="neutral" class="mt-4 text-primary text-center">
+		Conoce los detalles de cada negro mayor
+	</Typography>
+
+	<div class="min-h-[800px] mt-8 flex flex-col items-center justify-center gap-8 md:mt-32 md:flex-row lg:mt-0">
+		<article
+			class="relative flex w-full max-w-[70%] flex-col items-center justify-center md:absolute md:max-w-full lg:-mt-32"
+		>
+			<BrotherBigImage
+				id={selectedBrother.id}
+				name={selectedBrother.name}
+				country={selectedBrother.country}
+				countryName={selectedBrother.countryName}
+				loading={selectedBrotherId ? "eager" : "lazy"}
+			/>
+		</article>
+
+		<div class="brothers-nav hidden w-full justify-between md:flex">
+			<nav class="brothers-lists flex h-full justify-start gap-4 py-4">
+				<ColumnBrothers
+					brothers={brotherColumns[0]}
+					selectedBrother={selectedBrother}
+					imgLoading={!selectedBrotherId ? "lazy" : undefined}
+				/>
+				<ColumnBrothers
+					brothers={brotherColumns[1]}
+					selectedBrother={selectedBrother}
+					class="mt-12"
+					imgLoading={!selectedBrotherId ? "lazy" : undefined}
+				/>
+			</nav>
+
+			<nav class="brothers-lists flex h-full justify-end gap-2 py-4">
+				<ColumnBrothers
+					brothers={brotherColumns[2]}
+					selectedBrother={selectedBrother}
+					class="mt-12"
+					imgLoading={!selectedBrotherId ? "lazy" : undefined}
+				/>
+				<ColumnBrothers
+					brothers={brotherColumns[3]}
+					selectedBrother={selectedBrother}
+					imgLoading={!selectedBrotherId ? "lazy" : undefined}
+				/>
+			</nav>
+		</div>
+
+		<div class="-mt-20 flex flex-col items-center justify-center md:mt-32 md:hidden">
+			<div class="carousel mt-8 w-full max-w-[100vw] overflow-y-hidden overflow-x-scroll">
+				<div
+					class="carousel-inner flex snap-x snap-mandatory overflow-y-hidden overflow-x-scroll pr-[40%]"
+				>
+					{
+						listOfBrothers.map((brother, index) => (
+							<div
+								class:list={`carousel-item w-[70%] flex-shrink-0 snap-center px-2 ${index === 0 ? "ml-[65%]" : ""} `}
+							>
+								<ColumnBrothers brothers={[brother]} selectedBrother={selectedBrother} />
+							</div>
+						))
+					}
+				</div>
+			</div>
+			<HorizontalScroll class:list={["w-16 text-primary opacity-80"]} />
+		</div>
+	</div>
+</section>
+
+<script>
+	import { $, $$ } from "@/lib/dom-selector"
+
+	document.addEventListener("astro:page-load", () => {
+		const brotherLinks = $$(".brother-link") as globalThis.NodeListOf<HTMLAnchorElement>
+		const brotherNav = $(".brothers-nav")
+
+		if (!brotherNav) return
+
+		const brotherTitle = $(".brother-title") as HTMLImageElement
+		const brotherPhoto = $(".brother-photo") as HTMLPictureElement
+		const brotherCountry = $(".brother-flag") as HTMLImageElement
+
+		const updatedSelectedBrotherId =
+			localStorage.getItem("selected:brother") ||
+			new URLSearchParams(window.location.search).get("brother") ||
+			"el-mariana"
+
+		const updatedSelectedBrotherElement: HTMLElement | null = $(
+			`.brother-link[data-id=${updatedSelectedBrotherId}]`
+		)
+		if (updatedSelectedBrotherElement) {
+			activateBrother(updatedSelectedBrotherElement, updatedSelectedBrotherElement, brotherNav, true)
+		}
+
+		// detect with intersection observer that the $brotherNav is in viewport
+		const brotherNavObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						// disconnect observer to do this only once
+						brotherNavObserver.disconnect()
+						// get all images and preload them
+						brotherLinks.forEach((link) => {
+							const { id } = link.dataset
+							const brotherSrc = `/img/brothers/${id}-big`
+							// create link preload for each image for webp
+							const preloadLink = document.createElement("link")
+							preloadLink.rel = "preload"
+							preloadLink.as = "image"
+							preloadLink.href = `${brotherSrc}.webp`
+							preloadLink.type = "image/webp"
+							document.head.appendChild(preloadLink)
+						})
+					}
+				})
+			},
+			{
+				root: null,
+				threshold: 0.1,
+			}
+		)
+		brotherNavObserver.observe(brotherNav)
+
+		function activateBrother(
+			element: HTMLElement,
+			link: HTMLElement,
+			nav: HTMLElement,
+			replaceUrl: boolean = false,
+			showAlliesAndOpponents: boolean = true
+		) {
+			if (element?.classList.contains("active")) return
+
+			const { id, name, country, countryName, opponents = "", allies = "" } = element?.dataset
+
+			if (!id || !name || !country || !countryName) return
+
+			const splitName = name.split(" ")
+			const lastName = splitName[splitName.length - 1]
+			const firstNames = splitName.slice(0, splitName.length - 1).join(" ")
+			const spanNames = `
+					<a href="/brothers/${id}" class="brother-link underline-transition transition-all duration-300 hover:text-accent motion-reduce:transition-none">
+						<span class="flex flex-col">
+							<span class="text-4xl">${firstNames?.toLocaleLowerCase()}</span>
+							<span>${lastName?.toLocaleLowerCase()}</span>
+						</span>
+					</a>
+			`
+
+			nav?.querySelector(".active")?.classList.remove("active")
+			nav
+				?.querySelectorAll(".opponent")
+				?.forEach((opponentEl) => opponentEl.classList.remove("opponent"))
+			nav?.querySelectorAll(".ally")?.forEach((allyEl) => allyEl.classList.remove("ally"))
+
+			link.classList.add("active")
+
+			if (showAlliesAndOpponents) {
+				allies.split(",").map((ally) =>
+					brotherLinks.forEach((link) => {
+						if (link.dataset.id === ally) {
+							link.classList.add("ally")
+						}
+					})
+				)
+
+				opponents.split(",").map((opponent) =>
+					brotherLinks.forEach((link) => {
+						const { id: linkId, opponents: linkOpponents } = link.dataset
+						if (linkId === opponent || (linkOpponents === opponent && linkId !== id)) {
+							link.classList.add("opponent")
+						}
+					})
+				)
+			}
+
+			if (replaceUrl) {
+				history.replaceState({}, "", `?brother=${id}`)
+			}
+
+			const brotherSrc = `/img/brothers/${id}-big`
+
+			brotherPhoto.getElementsByTagName("img")[0].src = `${brotherSrc}.webp`
+			brotherTitle.innerHTML = spanNames
+			brotherCountry.src = `/flags/${country}.webp`
+			brotherPhoto.getElementsByTagName("img")[0].alt = `Fotografía de ${name}`
+
+			brotherCountry.alt = `Bandera de ${countryName}`
+		}
+
+		brotherLinks.forEach((link) => {
+			link.addEventListener("click", (event: MouseEvent) => {
+				const currentTarget = event.currentTarget as HTMLElement
+				const brotherId = currentTarget.getAttribute("data-id")
+				if (brotherId) localStorage.setItem("selected:brother", JSON.stringify(brotherId))
+				activateBrother(currentTarget, currentTarget, brotherNav, true)
+			})
+		})
+
+		brotherLinks.forEach((link) => {
+			link.addEventListener("mouseenter", (event) => {
+				const currentTarget = event.currentTarget as HTMLElement
+				if (currentTarget.classList.contains("active")) return
+				activateBrother(currentTarget, link, brotherNav, true)
+			})
+		})
+
+		const carouselInner = $(".carousel-inner") as HTMLElement
+
+		// detect match media change for mobile
+		const mobileMediaQuery = window.matchMedia("(max-width: 768px)")
+
+		function highlightBrother(link: HTMLAnchorElement) {
+			const rect = link.getBoundingClientRect()
+			const { width } = carouselInner.getBoundingClientRect()
+
+			if (rect.left > width / 2 - rect.width * 0.75 && rect.left < width / 2 + rect.width * 0.25) {
+				activateBrother(link, link, carouselInner, false, false)
+			}
+		}
+
+		function highlightActiveBrother() {
+			brotherLinks.forEach((link) => {
+				highlightBrother(link)
+			})
+		}
+
+		function updateActiveThumbnailPosition() {
+			const brother = new URLSearchParams(window.location.search).get("brother")
+			const brotherActiveElement = $(`.carousel .brother-link[data-id=${brother}]`)
+			if (brotherActiveElement) {
+				const carouselWidth = carouselInner.clientWidth
+				const thumbnailWidth = brotherActiveElement.offsetWidth
+				const currentPosition = brotherActiveElement.offsetLeft - (carouselWidth - thumbnailWidth) / 2
+
+				carouselInner.scrollTo(currentPosition, 0)
+			}
+		}
+
+		if (mobileMediaQuery.matches) {
+			updateActiveThumbnailPosition()
+
+			carouselInner.addEventListener("scroll", () => {
+				highlightActiveBrother()
+			})
+		}
+	})
+</script>
+
+<style>
+	.brothers-lists {
+		@apply relative w-screen overflow-x-scroll md:overflow-hidden;
+		scrollbar-width: none;
+	}
+
+	@media (min-width: 1280px) {
+		.brothers-lists {
+			@apply h-auto w-full max-w-none overflow-hidden py-2;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.carousel {
+			scrollbar-width: none;
+		}
+
+		.carousel::-webkit-scrollbar {
+			display: none;
+		}
+
+		.carousel-inner {
+			transition: transform 0.3s ease-in-out;
+			scrollbar-width: none;
+		}
+
+		.carousel-inner::-webkit-scrollbar {
+			display: none;
+		}
+
+		.carousel-item {
+			transition: opacity 0.3s ease-in-out;
+		}
+
+		.carousel-item.active {
+			opacity: 1;
+			scale: 1.2;
+		}
+	}
+</style>
