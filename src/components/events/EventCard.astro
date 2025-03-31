@@ -38,12 +38,14 @@ const formatDate = (dateString: string): string => {
     )}
 
     <div class="mt-4">
-      <button
+      <a
+        href={`/events/${event.id}`}
+        title={`Ver galería del evento ${event.title}`}
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200"
         data-event-id={event.id}
       >
         Ver galería
-      </button>
+      </a>
     </div>
   </div>
 </article>

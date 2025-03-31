@@ -1,0 +1,63 @@
+---
+import Typography from "@/components/Typography.astro"
+
+import { EVENTS } from "@/consts/events"
+import Layout from "@/layouts/Layout.astro"
+import type { Preload } from "@/types/Preload"
+import CyclicGallery from "@/components/gallery/CyclicGallery.astro"
+import CycliGallery2 from "@/components/gallery/CycliGallery2.astro"
+
+export function getStaticPaths() {
+	return EVENTS.map(({ id }) => {
+		return { params: { id } }
+	})
+}
+
+const { id } = Astro.params
+
+const [event] = EVENTS.filter((event) => event.id === id)
+
+const preloadEventImages: Preload[] = [
+	{
+		as: "image",
+    href: `/img/events/${event.category.urlname}/${event.id}/cover.webp`,
+		type: "image/webp",
+		rel: "preload",
+	}
+]
+const imageNames = event.gallery || [];
+
+const images = imageNames.map(imageName => `/img/events/${event.category.urlname}/${event.id}/${imageName}`);
+// Transform image URLs into structured image objects
+const imageUrls = images.map((url, index) => {
+  return {
+    src: url,
+    alt: `Imagen ${index + 1} del evento ${event.title}`,
+    title: event.title,
+    description: event.description
+  };
+});
+export const prerender = true
+---
+
+<Layout
+  description={`Información sobre el evento ${event.title}`}
+  title={`${event.title}`}
+	preload={preloadEventImages}
+>
+	<main>
+		<section
+      class="bg-none overflow-hidden"
+		>
+			<!-- <CyclicGallery
+				images={imageUrls}
+			/> -->
+			<CycliGallery2
+        images={imageUrls}
+			/>
+		</section>
+		<section
+		>
+		</section>
+	</main>
+</Layout>

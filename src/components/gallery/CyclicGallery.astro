@@ -1,0 +1,268 @@
+---
+// Define the props interface
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+    title?: string;
+    description?: string;
+  }[];
+}
+
+// Get the images from props
+const { images } = Astro.props;
+
+// Ensure we have at least 5 images (or duplicate if fewer)
+const normalizedImages =
+  images.length >= 5
+    ? images
+    : [...images, ...images, ...images, ...images, ...images].slice(0, 5);
+---
+
+<div
+  class="cyclic-gallery relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl"
+>
+  <div class="gallery-slider relative aspect-[16/9]">
+    <!-- Main image (index 0) -->
+    <div
+      class="main-image absolute inset-0 z-20 transition-transform duration-700 ease-in-out"
+    >
+      <div class="relative w-full h-full overflow-hidden rounded-2xl">
+        <img
+          src={normalizedImages[0].src || "/placeholder.svg"}
+          alt={normalizedImages[0].alt}
+          class="w-full h-full object-cover"
+          data-index="0"
+        />
+        {
+          normalizedImages[0].title && (
+            <div class="absolute bottom-0 left-0 p-6 text-white bg-gradient-to-t from-black/70 to-transparent w-full">
+              <h2 class="text-4xl font-bold mb-2">
+                {normalizedImages[0].title}
+              </h2>
+              {normalizedImages[0].description && (
+                <p class="text-sm max-w-md">
+                  {normalizedImages[0].description}
+                </p>
+              )}
+              <button class="mt-4 px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-opacity-90 transition-colors">
+                See More
+              </button>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Behind image (index 4 - last image) -->
+    <div
+      class="behind-image absolute inset-0 z-10 scale-95 opacity-0 transition-all duration-700 ease-in-out"
+    >
+      <div class="w-full h-full overflow-hidden rounded-2xl">
+        <img
+          src={normalizedImages[normalizedImages.length - 1].src || "/placeholder.svg"}
+          alt={normalizedImages[normalizedImages.length - 1].alt}
+          class="w-full h-full object-cover"
+          data-index="4"
+        />
+      </div>
+    </div>
+
+    <!-- Small images (index 1-3) -->
+    <div
+      class="small-images-container absolute right-4 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-3"
+    >
+      {
+        normalizedImages.map((image, index) => (
+          <div
+            class="small-image w-32 h-40 overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-in-out hover:scale-105 cursor-pointer"
+            data-index={index + 1}
+          >
+            <img
+              src={image.src || "/placeholder.svg"}
+              alt={image.alt}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Navigation buttons -->
+    <div
+      class="navigation-buttons absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-2"
+    >
+      <button
+        class="prev-button p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+        aria-label="Previous image"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      <button
+        class="next-button p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+        aria-label="Next image"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+	import { $, $$ } from "@/lib/dom-selector"
+  // Client-side JavaScript for handling the gallery functionality
+  class CyclicGallery {
+    gallery: HTMLElement;
+    mainImage!: HTMLElement;
+    behindImage!: HTMLElement;
+    smallImages: HTMLElement[] = [];
+    prevButton!: HTMLElement;
+    nextButton!: HTMLElement;
+    images: HTMLImageElement[] = [];
+    currentIndex: number = 0;
+    totalImages: number = 0;
+
+    constructor(gallerySelector: string) {
+      this.gallery = $(gallerySelector) as HTMLElement;
+      if (!this.gallery) return;
+
+      this.mainImage = this.gallery.querySelector(".main-image") as HTMLElement;
+      this.behindImage = this.gallery.querySelector(
+        ".behind-image"
+      ) as HTMLElement;
+      this.smallImages = Array.from(
+        this.gallery.querySelectorAll(".small-image")
+      );
+      this.prevButton = this.gallery.querySelector(
+        ".prev-button"
+      ) as HTMLElement;
+      this.nextButton = this.gallery.querySelector(
+        ".next-button"
+      ) as HTMLElement;
+
+      // Get all images for reference
+      this.images = Array.from(this.gallery.querySelectorAll("img"));
+      this.images.map(x => console.log(x))
+      this.totalImages = this.images.length;
+
+      this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+      this.nextButton.addEventListener("click", () => this.goToNext());
+      this.prevButton.addEventListener("click", () => this.goToPrev());
+
+      // Make small images clickable
+      this.smallImages.forEach((smallImage, index) => {
+        smallImage.addEventListener("click", () => {
+          this.goToImage(parseInt(smallImage.dataset.index || "0"));
+        });
+      });
+    }
+
+    goToNext() {
+      const nextIndex = this.currentIndex === this.totalImages - 1 ? 0 : this.currentIndex + 1;
+      this.transitionToImage(nextIndex);
+    }
+
+    goToPrev() {
+      const prevIndex = this.currentIndex === 0 ? this.totalImages - 1 : this.currentIndex - 1;
+      this.transitionToImage(prevIndex);
+    }
+
+    goToImage(index: number) {
+      this.transitionToImage(index);
+    }
+
+    transitionToImage(newIndex: number) {
+      // Save current main image
+      const currentMainSrc = this.images[this.currentIndex].src;
+      const currentMainAlt = this.images[this.currentIndex].alt;
+
+      // Prepare the behind image (current main will move behind)
+      this.behindImage.querySelector("img")!.src = currentMainSrc;
+      this.behindImage.querySelector("img")!.alt = currentMainAlt;
+
+      // Get the new main image data
+      const newMainSrc = this.images[newIndex].src;
+      const newMainAlt = this.images[newIndex].alt;
+
+      // Animate transition
+      this.behindImage.classList.remove("opacity-0", "scale-95");
+      this.mainImage.classList.add("scale-105", "opacity-0");
+
+      // After animation completes, update the DOM
+      setTimeout(() => {
+        // Update main image
+        this.mainImage.querySelector("img")!.src = newMainSrc;
+        this.mainImage.querySelector("img")!.alt = newMainAlt;
+
+        // Reset animations
+        this.mainImage.classList.remove("scale-105", "opacity-0");
+        this.behindImage.classList.add("opacity-0", "scale-95");
+
+        // Update all images in the correct order
+        // this.updateImageOrder(newIndex);
+
+        // Update current index
+        this.currentIndex = newIndex;
+      }, 700); // Match the transition duration
+    }
+
+    updateImageOrder(newMainIndex: number) {
+      // Create a new array representing the new order
+      const newOrder: number[] = [];
+
+      // New main image goes first
+      newOrder.push(newMainIndex);
+
+      // Add the next 3 images as small images
+      for (let i = 1; i <= 3; i++) {
+        newOrder.push((newMainIndex + i) % this.totalImages);
+      }
+
+      // Add the previous image as the behind image
+      newOrder.push((newMainIndex - 1 + this.totalImages) % this.totalImages);
+
+      // Update the small images
+      this.smallImages.forEach((smallImage, index) => {
+        const imgElement = smallImage.querySelector("img")!;
+        const newImageIndex = newOrder[index + 1]; // +1 because index 0 is the main image
+        imgElement.src = this.images[newImageIndex].src;
+        imgElement.alt = this.images[newImageIndex].alt;
+        smallImage.dataset.index = newImageIndex.toString();
+      });
+
+      // Update data-index for main and behind images
+      this.mainImage.querySelector("img")!.dataset.index =
+        newOrder[0].toString();
+      this.behindImage.querySelector("img")!.dataset.index =
+        newOrder[4].toString();
+    }
+  }
+
+  // Initialize all galleries on the page
+  document.addEventListener("DOMContentLoaded", () => {
+    new CyclicGallery(".cyclic-gallery");
+  });
+</script>
