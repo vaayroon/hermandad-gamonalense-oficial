@@ -119,7 +119,7 @@ const brotherColumns = [
 		const updatedSelectedBrotherId =
 			localStorage.getItem("selected:brother") ||
 			new URLSearchParams(window.location.search).get("brother") ||
-			"el-mariana"
+			"kevincondorromero"
 
 		const updatedSelectedBrotherElement: HTMLElement | null = $(
 			`.brother-link[data-id=${updatedSelectedBrotherId}]`
