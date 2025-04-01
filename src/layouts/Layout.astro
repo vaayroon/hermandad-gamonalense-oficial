@@ -38,8 +38,10 @@ const { title, description, preload, canonical, image } = Astro.props;
 				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
 			}
 
-			const isDark = window.getThemePreference() === "dark"
-			document.documentElement.classList.toggle("dark", isDark)
+      document.addEventListener('astro:page-load', () => {
+				const isDark = window.getThemePreference() === "dark"
+				document.documentElement.classList.toggle("dark", isDark)
+			});
 		</script>
 	</head>
 	<body>
