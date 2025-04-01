@@ -42,7 +42,32 @@ export const EVENTS: Event[] = [
     description: "10° Aniversario de nuestra querida hermandad",
     imageUrl:
       "https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/476610185_1148125423980553_8319415945465157033_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=GE1a4shv80UQ7kNvgGdGNXJ&_nc_oc=Adgk96tONeUSIeJd6cGTEYCiYGzY5sNSJbNcSWeqDZpfs8BtOPwv63wZIRKRwfsTgnyoVyDPFBc907rNu0nNh-vV&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=6ArgiCgb8k2kVXXx418UEQ&oh=00_AYELSEzSm-ZQw0EuqL_djZz75S19liVDFmbYCnNKDxYG5Q&oe=67DCA182",
-    gallery: ["/images/gallery/aniv-1.jpg"],
+    /* .r-------- k3v1n k3v1n 140 KB Tue Apr  1 20:24:53 2025  3Bandits.webp
+.r-------- k3v1n k3v1n 181 KB Tue Apr  1 BananaAndSon.webp
+.r-------- k3v1n k3v1n 153 KB Tue Apr  1 BeforeFightHelmet.webp
+.r-------- k3v1n k3v1n 214 KB Tue Apr  1 BrotherBirthday.webp
+.r-------- k3v1n k3v1n 267 KB Tue Apr  1 BrothersDancingSquare.webp
+.r-------- k3v1n k3v1n 281 KB Sat Mar 29 cover.webp
+.r-------- k3v1n k3v1n  69 KB Tue Apr  1 DrinkTime.webp
+.r-------- k3v1n k3v1n  65 KB Tue Apr  1 FightTime.webp
+.r-------- k3v1n k3v1n 185 KB Tue Apr  1 FullBrothers.webp
+.r-------- k3v1n k3v1n  96 KB Tue Apr  1 NewPromises.webp
+.r-------- k3v1n k3v1n 150 KB Tue Apr  1 TheBand.webp
+.r-------- k3v1n k3v1n 110 KB Tue Apr  1 WithTheBand.webp */
+    gallery: [
+      "3Bandits.webp",
+      "cover.webp",
+      "FullBrothers.webp",
+      "BananaAndSon.webp",
+      "BeforeFightHelmet.webp",
+      "BrotherBirthday.webp",
+      "BrothersDancingSquare.webp",
+      "DrinkTime.webp",
+      "FightTime.webp",
+      "NewPromises.webp",
+      "TheBand.webp",
+      "WithTheBand.webp"
+    ],
   },
   {
     id: "48cd887b-963c-4702-9462-099e5a828718",
