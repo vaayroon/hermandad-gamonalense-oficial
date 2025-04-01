@@ -64,11 +64,11 @@ export const BROTHERS: Brother[] = addGetters([
 		guard: "Derecha",
 		reach: 165,
 		socials: {
-			twitch: "https://twitch.tv/vaayroontv",
-			instagram: "https://instagram.com/kevincr99",
-			twitter: "https://twitter.com/kevinprincecr",
-			youtube: "https://youtube.com/vaayroon",
-			tiktok: "https://tiktok.com/@vaayroon",
+			twitch: "https://www.facebook.com/sthephano.condor",
+			instagram: "https://instagram.com/tefano01",
+			twitter: "https://www.facebook.com/sthephano.condor",
+			youtube: "https://www.facebook.com/sthephano.condor",
+			tiktok: "https://tiktok.com/@sthephanocl",
 		},
 		clips: [
 			{

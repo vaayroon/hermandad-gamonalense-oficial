@@ -1,0 +1,74 @@
+---
+import Typography from "@/components/Typography.astro"
+
+import { EVENTS } from "@/consts/events"
+import Layout from "@/layouts/Layout.astro"
+import type { Preload } from "@/types/Preload"
+import CyclicGallery from "@/components/gallery/CyclicGallery.astro"
+
+export function getStaticPaths() {
+	return EVENTS.map(({ id }) => {
+		return { params: { id } }
+	})
+}
+
+const { id } = Astro.params
+
+const [event] = EVENTS.filter((event) => event.id === id)
+
+const preloadEventImages: Preload[] = [
+	{
+		as: "image",
+    href: `/img/events/${event.category.urlname}/${event.id}/cover.webp`,
+		type: "image/webp",
+		rel: "preload",
+	}
+]
+const imageNames = event.gallery || [];
+
+const images = imageNames.map(imageName => `/img/events/${event.category.urlname}/${event.id}/${imageName}`);
+
+const imageUrls = images.map((url, index) => {
+  return {
+    src: url,
+    alt: `Imagen ${index + 1} del evento ${event.title}`,
+    title: "",
+    description: ""
+  };
+});
+export const prerender = true
+---
+
+<Layout
+  description={`Información sobre el evento ${event.title}`}
+  title={`${event.title}`}
+	preload={preloadEventImages}
+>
+	<main>
+		<section
+      class="bg-none flex flex-col justify-center items-center"
+		>
+			<Typography
+				as="h1"
+				variant="h1"
+				color="primary400"
+			>
+				{event.title}
+			</Typography>
+			<Typography
+				as="body"
+				variant="body"
+				color="primary"
+				class="text-center"
+			>
+				{event.description}
+			</Typography>
+			<CyclicGallery
+        images={imageUrls}
+			/>
+		</section>
+		<section
+		>
+		</section>
+	</main>
+</Layout>

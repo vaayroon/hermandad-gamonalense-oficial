@@ -1,0 +1,90 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+    title?: string;
+    description?: string;
+  }[];
+}
+
+const { images } = Astro.props;
+---
+
+<div
+  class="container relative w-[1000px] h-[600px] mx-auto my-8 rounded-[20px] bg-[#f5f5f5] shadow-[0_5px_30px_#dbdbdb] "
+>
+  <div class:list={[
+      "slide relative w-full h-full",
+      "[&>*.item:nth-child(-n+2)]:top-0 [&>*.item:nth-child(-n+2)]:left-0 [&>*.item:nth-child(-n+2)]:translate-x-0 [&>*.item:nth-child(-n+2)]:translate-y-0 [&>*.item:nth-child(-n+2)]:w-full [&>*.item:nth-child(-n+2)]:h-full [&>*.item:nth-child(-n+2)]:rounded-[15px])",
+      "[&>*.item:nth-child(2)>.content]:block",
+      "[&>*.item:nth-child(3)]:left-[calc(50%+440px)]",
+      "[&>*.item:nth-child(n+4)]:left-[calc(50%+440px)] [&>*.item:nth-child(n+4)]:hidden [&>*.item:nth-child(n+4)]:overflow-hidden",
+    ]}
+  >
+    {
+      images.map((image, index) => (
+        <div
+          class:list={[
+            "item w-[200px] h-[300px] absolute p-0 top-1/2 -translate-y-1/2 list-none rounded-[20px] shadow-[0_5px_30px_#505050] bg-center bg-cover bg-no-repeat inline-block fadeInUp"
+          ]}
+          style={`background-image: url('${image.src}');`}
+          data-index={index}
+        >
+          <div class="content absolute top-1/2 left-[100px] w-[300px] text-left -translate-y-1/2 text-white hidden">
+            <h2 class="text-4xl font-bold mb-2">
+              {image.title}
+            </h2>
+            {image.description && (
+              <p class="text-sm max-w-md">
+                {image.description}
+              </p>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="button absolute w-full text-center bottom-[20px]">
+    <button
+      class="prev w-[40px] h-[35px] rounded-[8px] border border-primary-800 bg-white text-primary-800 cursor-pointer m-[0_5px] transition-colors duration-300 hover:bg-primary-800 hover:text-white"
+    >
+      {"<"}
+    </button>
+    <button
+      class="next w-[40px] h-[35px] rounded-[8px] border border-primary-800 bg-white text-primary-800 cursor-pointer m-[0_5px] transition-colors duration-300 hover:bg-primary-800 hover:text-white"
+    >
+      {">"}
+    </button>
+  </div>
+</div>
+
+<script>
+	import { $, $$ } from "@/lib/dom-selector"
+
+  const next = $(".next");
+  const prev = $(".prev");
+
+  if (next) {
+    next.addEventListener("click", () => {
+      const items = $$(".item");
+      const slide = $(".slide");
+
+      if (slide && items.length > 0) {
+        slide.appendChild(items[0]);
+      }
+    });
+  }
+
+  if (prev) {
+    prev.addEventListener("click", () => {
+      const items = $$(".item");
+      const slide = $(".slide");
+
+      if (slide && items.length > 0) {
+        slide.prepend(items[items.length - 1]);
+      }
+    });
+  }
+</script>

@@ -1,0 +1,28 @@
+---
+import type { EventCategory } from "@/types/Event"
+
+interface Props {
+	readonly id: string
+	readonly category: EventCategory
+	readonly name: string
+	readonly loading?: "lazy" | "eager"
+}
+
+const { name, category, id, loading } = Astro.props
+---
+
+<picture
+	class:list={"h-48 w-full"}
+>
+	<img
+		decoding="async"
+		class="w-full h-48 object-cover"
+		alt={`Portada del evento ${name}`}
+		src={`/img/events/${category.urlname}/${id}/cover.webp`}
+		style="
+			filter: drop-shadow(0 0 5px rgba(0, 0, 0, .5));
+			mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+		"
+		loading={loading}
+	/>
+</picture>

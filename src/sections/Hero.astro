@@ -1,14 +1,15 @@
 ---
+import Typography from "@/components/Typography.astro";
 import Hermandad from "@/icons/hermandad.astro";
 ---
 
 <section class="flex flex-col justify-center items-center">
-    <span
-        class={`animate-fade-in animate-delay-300 text-center uppercase px-6 py-1 mb-9 font-bold text-3xl
-        text-primary-600
-        `}
+    <Typography
+        as="h1"
+        variant="h1"
+        color="primary400"
     >
         Hermandad Gamonalense
-    </span>
+    </Typography>
     <Hermandad class="text-primary animate-fade-in-up w-[200px] md:w-[400px] h-auto" />
 </section>

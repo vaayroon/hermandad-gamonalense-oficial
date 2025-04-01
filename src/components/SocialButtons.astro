@@ -2,6 +2,7 @@
 import ThemeToogle from "@/components/ThemeToogle.astro";
 import Facebook from "@/icons/facebook.astro";
 import Github from "@/icons/github.astro";
+import Youtube from "@/icons/youtube.astro";
 ---
 
 <nav class:list={`${Astro.props.class}`}>
@@ -18,6 +19,19 @@ import Github from "@/icons/github.astro";
 				class="inline-block any-hover:scale-125 any-hover:opacity-70 motion-safe:transition motion-reduce:any-hover:scale-100"
 			>
 				<Facebook
+					class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"
+				/>
+			</a>
+		</li>
+		<li>
+			<a
+				target="_blank"
+				rel="noopener"
+				aria-label="Canal de Youtube de La Hermandad Gamonalense, se abrirá en una nueva pestaña"
+				href="https://www.youtube.com/@hermandadgamonalense"
+				class="inline-block any-hover:scale-125 any-hover:opacity-70 motion-safe:transition motion-reduce:any-hover:scale-100"
+			>
+				<Youtube
 					class="text-primary transition-colors duration-300 hover:text-primary-400 motion-reduce:duration-0"
 				/>
 			</a>

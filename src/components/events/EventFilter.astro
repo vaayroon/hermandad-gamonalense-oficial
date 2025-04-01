@@ -1,0 +1,45 @@
+---
+import type { EventCategory } from '../../types/Event';
+
+interface Props {
+  categories: EventCategory[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="flex justify-center gap-4 mb-8 overflow-x-auto py-2">
+  {categories.map(category => (
+    <button
+      data-categorybutton={category.id}
+      class={`
+        ${category.id == 'todos' ? "bg-primary-500 text-white" :"bg-white text-primary-900"}
+        px-4 py-2 rounded-full hover:bg-primary-500 hover:text-white transition-colors duration-200
+      `}
+    >
+      {category.name}
+    </button>
+  ))}
+</div>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-categorybutton]');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => 
+      {
+        btn.classList.remove('bg-primary-500', 'text-white')
+        btn.classList.add('bg-white', 'text-primary-900')
+      });
+
+      button.classList.add('bg-primary-500', 'text-white')
+      button.classList.remove('bg-white', 'text-primary-900')
+      
+      const category = button.dataset.categorybutton;
+      document.dispatchEvent(new CustomEvent('filterEvents', {
+        detail: category
+      }));
+    });
+  });
+</script>
