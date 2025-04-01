@@ -40,6 +40,23 @@ export default {
           dark: "#4A0404",
         },
       },
+      animation: {
+        fadeInUp: "fadeInUp 2s ease-in-out forwards",
+      },
+      keyframes: {
+        fadeInUp: {
+          from: {
+            opacity: "0",
+            transform: "translateY(100px)",
+            filter: "blur(33px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+            filter: "blur(0)",
+          },
+        },
+      },
     },
   },
   plugins: [
