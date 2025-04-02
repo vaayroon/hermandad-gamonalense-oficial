@@ -23,23 +23,25 @@ const { categories } = Astro.props;
 </div>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-categorybutton]');
+  document.addEventListener("astro:page-load", () => {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-categorybutton]');
+    
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => 
+        {
+          btn.classList.remove('bg-primary-500', 'text-white')
+          btn.classList.add('bg-white', 'text-primary-900')
+        });
   
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      buttons.forEach(btn => 
-      {
-        btn.classList.remove('bg-primary-500', 'text-white')
-        btn.classList.add('bg-white', 'text-primary-900')
+        button.classList.add('bg-primary-500', 'text-white')
+        button.classList.remove('bg-white', 'text-primary-900')
+        
+        const category = button.dataset.categorybutton;
+        document.dispatchEvent(new CustomEvent('filterEvents', {
+          detail: category
+        }));
       });
-
-      button.classList.add('bg-primary-500', 'text-white')
-      button.classList.remove('bg-white', 'text-primary-900')
-      
-      const category = button.dataset.categorybutton;
-      document.dispatchEvent(new CustomEvent('filterEvents', {
-        detail: category
-      }));
     });
-  });
+  })
 </script>
