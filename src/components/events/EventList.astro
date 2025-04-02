@@ -18,17 +18,19 @@ const { events } = Astro.props;
 <script>
   import { EventCategories } from "@/consts/event-category";
 
-  document.addEventListener('filterEvents', (e: Event) => {
-    const customEvent = e as CustomEvent;
-    const category = customEvent.detail;
-    const cards = document.querySelectorAll<HTMLElement>('[data-categorycards]');
-    
-    cards.forEach(card => {
-      if (category === EventCategories.All.id || card.dataset.categorycards === category) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+  document.addEventListener("astro:page-load", () => {  
+    document.addEventListener('filterEvents', (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const category = customEvent.detail;
+      const cards = document.querySelectorAll<HTMLElement>('[data-categorycards]');
+      
+      cards.forEach(card => {
+        if (category === EventCategories.All.id || card.dataset.categorycards === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     });
-  });
+  })
 </script>

@@ -63,28 +63,30 @@ const { images } = Astro.props;
 <script>
 	import { $, $$ } from "@/lib/dom-selector"
 
-  const next = $(".next");
-  const prev = $(".prev");
-
-  if (next) {
-    next.addEventListener("click", () => {
-      const items = $$(".item");
-      const slide = $(".slide");
-
-      if (slide && items.length > 0) {
-        slide.appendChild(items[0]);
-      }
-    });
-  }
-
-  if (prev) {
-    prev.addEventListener("click", () => {
-      const items = $$(".item");
-      const slide = $(".slide");
-
-      if (slide && items.length > 0) {
-        slide.prepend(items[items.length - 1]);
-      }
-    });
-  }
+  document.addEventListener("astro:page-load", () => {
+    const next = $(".next");
+    const prev = $(".prev");
+  
+    if (next) {
+      next.addEventListener("click", () => {
+        const items = $$(".item");
+        const slide = $(".slide");
+  
+        if (slide && items.length > 0) {
+          slide.appendChild(items[0]);
+        }
+      });
+    }
+  
+    if (prev) {
+      prev.addEventListener("click", () => {
+        const items = $$(".item");
+        const slide = $(".slide");
+  
+        if (slide && items.length > 0) {
+          slide.prepend(items[items.length - 1]);
+        }
+      });
+    }
+  })
 </script>
