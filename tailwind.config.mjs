@@ -41,20 +41,44 @@ export default {
         },
       },
       animation: {
-        fadeInUp: "fadeInUp 2s ease-in-out forwards",
+        expandZoomIn: "expandZoomIn 0.6s ease-out backwards",
       },
       keyframes: {
-        fadeInUp: {
+        expandZoomIn: {
           from: {
-            opacity: "0",
+            top: "20%",
+            left: "90%",
+            width: "200px",
+            height: "300px",
             transform: "translateY(100px)",
             filter: "blur(33px)",
           },
           to: {
-            opacity: "1",
-            transform: "translateY(0)",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            transform: "translateX(0) translateY(0)",
             filter: "blur(0)",
           },
+        },
+        expandZoomOut: {
+          from: {
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            transform: "translateX(0) translateY(0)",
+            filter: "blur(0)",
+          },
+          to: {
+            top: "20%",
+            left: "90%",
+            width: "200px",
+            height: "300px",
+            transform: "translateY(100px)",
+            filter: "blur(33px)",
+          }
         },
       },
     },
