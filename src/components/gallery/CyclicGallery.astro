@@ -22,19 +22,18 @@ const { images } = Astro.props;
       "slide relative w-full h-full md:w-[90%] aspect-[16/9]",
       "[&>*.item:nth-child(-n+2)]:top-0 [&>*.item:nth-child(-n+2)]:left-0 [&>*.item:nth-child(-n+2)]:translate-x-0 [&>*.item:nth-child(-n+2)]:translate-y-0 [&>*.item:nth-child(-n+2)]:w-full [&>*.item:nth-child(-n+2)]:h-full [&>*.item:nth-child(-n+2)]:rounded-[10px] sm:[&>*.item:nth-child(-n+2)]:rounded-[15px]",
       "[&>*.item:nth-child(2)>.content]:block",
-      "[&>*.item:nth-child(3)]:top-[85%] [&>*.item:nth-child(3)]:left-[40%] [&>*.item:nth-child(2)]:animate-expandZoomIn",
-      "md:[&>*.item:nth-child(3)]:top-[20%] md:[&>*.item:nth-child(3)]:left-[90%]",
-      "[&>*.item:nth-child(n+4)]:top-[85%] [&>*.item:nth-child(3)]:left-[40%]",
-      "md:[&>*.item:nth-child(n+4)]:top-[20%] md:[&>*.item:nth-child(3)]:left-[90%]",
-      "[&>*.item:nth-child(n+4)]:hidden [&>*.item:nth-child(n+4)]:overflow-hidden [&>*.item:nth-child(3)]:animate-zoom-in",
+      "[&>*.item:nth-child(3)]:top-[110%] [&>*.item:nth-child(3)]:left-[40%]",
+      "md:[&>*.item:nth-child(3)]:top-[50%] md:[&>*.item:nth-child(3)]:left-[90%]",
+      "[&>*.item:nth-child(n+4)]:top-[110%] [&>*.item:nth-child(3)]:left-[40%]",
+      "md:[&>*.item:nth-child(n+4)]:top-[50%] md:[&>*.item:nth-child(n+4)]:left-[90%]",
+      "[&>*.item:nth-child(n+4)]:hidden [&>*.item:nth-child(n+4)]:overflow-hidden",
     ]}
   >
     {
       images.map((image, index) => (
         <div
           class:list={[
-            "transition",
-            "item w-[80px] h-[120px] absolute p-0 top-1/2 -translate-y-1/2 list-none rounded-[10px] shadow-[0_3px_15px_#505050] bg-center bg-cover bg-no-repeat inline-block",
+            "item w-[80px] h-[120px] absolute p-0 translate-y-[-50%] list-none rounded-[10px] shadow-[0_3px_15px_#505050] bg-center bg-cover bg-no-repeat inline-block",
             "sm:w-[106px] md:w-[146px] lg:w-[200px] sm:h-[160px] md:h-[220px] lg:h-[300px]",
             "sm:rounded-[15px] md:rounded-[20px]",
             "sm:shadow-[0_4px_20px_#505050] md:shadow-[0_5px_30px_#505050]",
@@ -61,13 +60,23 @@ const { images } = Astro.props;
     class="hidden button absolute w-full text-center bottom-[10px] left-[-5%] md:block md:bottom-[20px]"
   >
     <button
-      class="prev w-[30px] sm:w-[35px] md:w-[40px] h-[25px] sm:h-[30px] md:h-[35px] rounded-[4px] sm:rounded-[6px] md:rounded-[8px] border border-primary-800 bg-white text-primary-800 cursor-pointer m-[0_3px] sm:m-[0_4px] md:m-[0_5px] transition-colors duration-300 hover:bg-primary-800 hover:text-white"
+      class="prev w-[30px] sm:w-[35px] md:w-[40px] h-[25px] sm:h-[30px] md:h-[35px] rounded-[4px] sm:rounded-[6px] md:rounded-[8px]
+        bg-white text-primary-800
+        cursor-pointer m-[0_3px] sm:m-[0_4px] md:m-[0_5px]
+        hover:bg-primary-200/50 hover:text-white
+        dark:hover:bg-primary-800/80
+      "
       aria-label="Previous image"
     >
       {"<"}
     </button>
     <button
-      class="next w-[30px] sm:w-[35px] md:w-[40px] h-[25px] sm:h-[30px] md:h-[35px] rounded-[4px] sm:rounded-[6px] md:rounded-[8px] border border-primary-800 bg-white text-primary-800 cursor-pointer m-[0_3px] sm:m-[0_4px] md:m-[0_5px] transition-colors duration-300 hover:bg-primary-800 hover:text-white"
+      class="next w-[30px] sm:w-[35px] md:w-[40px] h-[25px] sm:h-[30px] md:h-[35px] rounded-[4px] sm:rounded-[6px] md:rounded-[8px]
+        bg-white text-primary-800
+        cursor-pointer m-[0_3px] sm:m-[0_4px] md:m-[0_5px]
+        hover:bg-primary-200/50 hover:text-white
+        dark:hover:bg-primary-800/80
+      "
       aria-label="Next image"
     >
       {">"}
@@ -77,13 +86,18 @@ const { images } = Astro.props;
   <!-- Mobile Slider controls -->
   <button
     type="button"
-    class="absolute prev-mobile md:hidden top-[-10%] start-[2%] z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+    class="absolute text-primary prev-mobile md:hidden top-[-10%] start-[2%] z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
   >
     <span
-      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-primary-200/50 dark:group-hover:bg-primary-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+      class="inline-flex items-center justify-center w-10 h-10 rounded-full
+        bg-secondary
+        group-hover:bg-primary-200/50 dark:group-hover:bg-primary-800/80
+        group-focus:ring-white dark:group-focus:ring-gray-800/70
+        group-focus:ring-4 group-focus:outline-none
+      "
     >
       <svg
-        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+        class="w-4 h-4 rtl:rotate-180"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -104,10 +118,15 @@ const { images } = Astro.props;
     class="absolute next-mobile md:hidden top-[-10%] end-[2%] z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
   >
     <span
-      class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
+      class="inline-flex items-center justify-center w-10 h-10 rounded-full
+        bg-secondary
+        group-hover:bg-primary-200/50 dark:group-hover:bg-primary-800/80
+        group-focus:ring-white dark:group-focus:ring-gray-800/70
+        group-focus:ring-4 group-focus:outline-none
+      "
     >
       <svg
-        class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+        class="w-4 h-4 rtl:rotate-180"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -139,9 +158,19 @@ const { images } = Astro.props;
       if (slide && items.length > 0) {
         switch (movement) {
           case "next":
+            items[1].classList.remove("animated-item");
+            items[2].classList.remove("animate-zoomIn");
+            items[3].classList.remove("animate-zoomOut");
+            items[2].classList.add("animated-item");
+            items[3].classList.add("animate-zoomIn");
             slide.appendChild(items[0]);
             break;
           case "prev":
+            items[1].classList.remove("animated-item");
+            items[2].classList.remove("animate-zoomIn");
+            items[3].classList.remove("animate-zoomOut");
+            items[1].classList.add("animated-item");
+            items[2].classList.add("animate-zoomOut");
             slide.prepend(items[items.length - 1]);
             break;
           default:
@@ -170,3 +199,8 @@ const { images } = Astro.props;
     }
   });
 </script>
+<style>
+  .animated-item {
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, top 0.6s ease-out, left 0.6s ease-out, width 0.6s ease-out, height 0.6s ease-out;
+  }
+</style>
