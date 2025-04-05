@@ -20,6 +20,7 @@ const {
 
 const determineCanonicalURL = () => {
 	if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+  else if (Astro.url.host.includes("192.168.1")) return "http://192.168.1.142:4321"
 	return canonical || Astro.url.pathname
 }
 

@@ -1,4 +1,5 @@
 ---
+// src/components/events/EventFilter.astro
 import type { EventCategory } from '../../types/Event';
 
 interface Props {
@@ -8,13 +9,16 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<div class="flex justify-center gap-4 mb-8 overflow-x-auto py-2">
+<div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8 overflow-x-auto py-2 px-2 sm:px-0 max-w-full">
   {categories.map(category => (
     <button
       data-categorybutton={category.id}
       class={`
-        ${category.id == 'todos' ? "bg-primary-500 text-white" :"bg-white text-primary-900"}
-        px-4 py-2 rounded-full hover:bg-primary-500 hover:text-white transition-colors duration-200
+        ${category.id == 'todos' ? "bg-primary-500 text-white" : "bg-white text-primary-900"}
+        px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base rounded-full 
+        hover:bg-primary-500 hover:text-white transition-colors duration-200
+        whitespace-nowrap min-w-[80px] sm:min-w-[100px] flex-shrink-0
+        shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400
       `}
     >
       {category.name}
@@ -28,8 +32,7 @@ const { categories } = Astro.props;
     
     buttons.forEach(button => {
       button.addEventListener('click', () => {
-        buttons.forEach(btn => 
-        {
+        buttons.forEach(btn => {
           btn.classList.remove('bg-primary-500', 'text-white')
           btn.classList.add('bg-white', 'text-primary-900')
         });

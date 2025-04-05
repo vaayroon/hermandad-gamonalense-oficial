@@ -41,19 +41,28 @@ export default {
         },
       },
       animation: {
-        fadeInUp: "fadeInUp 2s ease-in-out forwards",
+        zoomIn: "zoomIn 0.6s ease-out backwards",
+        zoomOut: "zoomOut 0.6s ease-out backwards",
       },
       keyframes: {
-        fadeInUp: {
+        zoomIn: {
           from: {
-            opacity: "0",
-            transform: "translateY(100px)",
-            filter: "blur(33px)",
+            opacity: 0,
+            transform: "translateY(-50%) scale(.5)",
           },
           to: {
-            opacity: "1",
-            transform: "translateY(0)",
-            filter: "blur(0)",
+            opacity: 1,
+            transform: "translateY(-50%) scale(1)",
+          },
+        },
+        zoomOut: {
+          from: {
+            opacity: 1,
+            transform: "translateY(-50%) scale(1)",
+          },
+          to: {
+            opacity: 0,
+            transform: "translateY(-50%) scale(.5)",
           },
         },
       },

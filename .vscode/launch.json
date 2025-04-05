@@ -8,6 +8,12 @@
       "type": "node-terminal"
     },
     {
+      "command": "pnpm dev-local",
+      "name": "Run HG Local",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "pnpm build",
       "name": "Build HG",
       "request": "launch",
