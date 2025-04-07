@@ -9,7 +9,7 @@ export const EVENTS: Event[] = [
     category: EventCategories.Main,
     description:
       "Celebración principal de la festividad Tayta Niño en Huayucachi",
-    prioste: "Juan Pérez Mamani",
+    prioste: "Juan Vilcas Ferrer y esposa Nancy Cuba Vila",
     imageUrl:
       "https://scontent-bcn1-1.xx.fbcdn.net/v/t39.30808-6/476562150_1189998699795570_3272211094281756444_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=-y36IcxT8PQQ7kNvgG2jhzx&_nc_oc=Adghx55cTbqsL6pGihgAkl7z_yIpDWn1m4nZnqBBtq2MKivytVc6pzoTJZK_V9M1e86Lfb8-uSnq37mwYUsVykte&_nc_zt=23&_nc_ht=scontent-bcn1-1.xx&_nc_gid=Y8oMlpXobtu8WNRr2SqoHw&oh=00_AYFheIWI7DP4-wN8_6vZtjb7pUEHOU4_wnq6jJuIBVT-tg&oe=67DCB349",
     gallery: [
