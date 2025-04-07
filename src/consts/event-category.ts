@@ -3,22 +3,22 @@ import { type EventCategory } from "@/types/Event";
 export const EventCategories: Record<string, EventCategory> = {
   All: {
     id: 'all',
-    name: 'All Events',
+    name: 'Todos los Eventos',
     urlname: 'all'
   },
   Main: {
     id: 'main',
-    name: 'Main Events',
+    name: 'Eventos Principales',
     urlname: 'main'
   },
   Institutional: {
     id: 'institutional',
-    name: 'Institutional Events',
+    name: 'Eventos Institucionales',
     urlname: 'institutional'
   },
   Social: {
     id: 'social',
-    name: 'Social Events',
+    name: 'Eventos Sociales',
     urlname: 'social'
   },
 } as const;
