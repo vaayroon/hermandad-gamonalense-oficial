@@ -29,4 +29,5 @@ export interface Brother {
 		name: string
 	}
 	rotate?: boolean
+	yearsElite?: number[]
 }
