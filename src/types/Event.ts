@@ -1,3 +1,5 @@
+import type { Sponsors } from "./Sponsors";
+
 export interface Event {
   id: string;
   title: string;
@@ -7,6 +9,7 @@ export interface Event {
   prioste?: string;
   imageUrl: string;
   gallery: string[];
+  gallerySponsor?: Sponsors[];
 }
 
 export interface EventCategory {

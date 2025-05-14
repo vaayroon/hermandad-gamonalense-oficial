@@ -1,0 +1,432 @@
+---
+interface CarouselItem {
+  id: string;
+  name: string;
+  imageSrc: string;
+  altText: string;
+  yearsElite?: number[];
+}
+
+export interface Props {
+  items: CarouselItem[];
+  activeIndex?: number;
+}
+
+const { items = [], activeIndex = 0 } = Astro.props;
+
+// Garantizar que el array sea cíclico
+const getItemAtIndex = (index: number) => {
+  const totalItems = items.length;
+  // Manejo del índice negativo y desbordamiento
+  return items[(((index % totalItems) + totalItems) % totalItems)];
+};
+
+// Obtener items para mostrar: anterior, activo y siguiente
+const prevItem = getItemAtIndex(activeIndex - 1);
+const activeItem = getItemAtIndex(activeIndex);
+const nextItem = getItemAtIndex(activeIndex + 1);
+---
+
+<div class="carousel-wrapper py-12">
+  <div class="carousel-container w-full overflow-hidden mx-auto max-w-5xl">
+    <div class="carousel-track flex justify-center items-center gap-4 md:gap-6 py-8">
+      <!-- Item Anterior -->
+      <div class="carousel-item secondary-item opacity-60 transform scale-75 transition-all duration-500 cursor-pointer" data-id={prevItem.id}>
+        <div class="relative">
+          <div class="aspect-[2/3] w-32 md:w-48 lg:w-64 overflow-hidden rounded-lg shadow-lg">
+            <img 
+              src={prevItem.imageSrc} 
+              alt={prevItem.altText} 
+              class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500" 
+              onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+            />
+          </div>
+        </div>
+        <p class="text-center text-primary mt-3 text-sm md:text-base font-medium">{prevItem.name}</p>
+      </div>
+
+      <!-- Item Activo -->
+      <div class="carousel-item primary-item z-10 transition-all duration-500 cursor-pointer" data-id={activeItem.id}>
+        <div class="relative">
+          <div class="aspect-[2/3] w-48 md:w-64 lg:w-80 overflow-hidden rounded-lg shadow-2xl ring-4 ring-primary-400 dark:ring-primary-600">
+            <img 
+              src={activeItem.imageSrc} 
+              alt={activeItem.altText} 
+              class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500" 
+              onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+            />
+          </div>
+        </div>
+        <div class="mt-4">
+          <p class="text-center text-xl md:text-2xl font-bold text-primary-800 dark:text-primary-400">{activeItem.name}</p>
+          <div class="flex flex-wrap justify-center gap-2 mt-2">
+            {activeItem.yearsElite && activeItem.yearsElite.length > 0 ? (
+              activeItem.yearsElite.map((year: number) => (
+                <span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">
+                  {year}
+                </span>
+              ))
+            ) : (
+              <span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">
+                Negro Mayor
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- Item Siguiente -->
+      <div class="carousel-item secondary-item opacity-60 transform scale-75 transition-all duration-500 cursor-pointer" data-id={nextItem.id}>
+        <div class="relative">
+          <div class="aspect-[2/3] w-32 md:w-48 lg:w-64 overflow-hidden rounded-lg shadow-lg">
+            <img 
+              src={nextItem.imageSrc} 
+              alt={nextItem.altText} 
+              class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500" 
+              onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+            />
+          </div>
+        </div>
+        <p class="text-center text-primary mt-3 text-sm md:text-base font-medium">{nextItem.name}</p>
+      </div>
+    </div>
+
+    <!-- Indicadores del carrusel -->
+    <div class="carousel-indicators flex justify-center gap-2 mt-6">
+      {items.map((_, index) => (
+        <button
+          class={`w-2 h-2 rounded-full transition-all duration-300 ${
+            index === activeIndex ? "bg-primary-600 w-6" : "bg-gray-300 dark:bg-gray-600"
+          }`}
+          data-index={index}
+          aria-label={`Ir al hermano ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+
+    <!-- Controles de navegación -->
+    <div class="carousel-controls flex justify-between absolute top-1/2 left-0 right-0 transform -translate-y-1/2 px-4 md:px-8 z-20">
+      <button
+        id="prevBtn"
+        class="bg-primary-600 text-white p-3 rounded-full shadow-md transition-colors duration-300 hover:bg-primary-500"
+        aria-label="Ver hermano anterior"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        id="nextBtn"
+        class="bg-primary-600 text-white p-3 rounded-full shadow-md transition-colors duration-300 hover:bg-primary-500"
+        aria-label="Ver hermano siguiente"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ items }}>
+  document.addEventListener('astro:page-load', () => {
+    let currentIndex = 0;
+    const totalItems = items.length;
+    let isAnimating = false; // Evitar múltiples clics durante la animación
+    
+    // Obtener elementos del DOM
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const carouselTrack = document.querySelector('.carousel-track');
+    const indicators = document.querySelectorAll('.carousel-indicators button');
+    
+    // Función para actualizar los indicadores
+    function updateIndicators() {
+      indicators.forEach((indicator, index) => {
+        if (index === currentIndex) {
+          indicator.classList.add('bg-primary-600', 'w-6');
+          indicator.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+        } else {
+          indicator.classList.remove('bg-primary-600', 'w-6');
+          indicator.classList.add('bg-gray-300', 'dark:bg-gray-600');
+        }
+      });
+    }
+    
+    // Función para actualizar el carrusel con animación
+    function updateCarousel(direction = null) {
+      if (isAnimating) return;
+      isAnimating = true;
+      
+      // Normalizar índice (manejo cíclico)
+      currentIndex = ((currentIndex % totalItems) + totalItems) % totalItems;
+      
+      // Actualizar indicadores
+      updateIndicators();
+      
+      // Calcular índices para los elementos a mostrar
+      const prevIndex = ((currentIndex - 1) % totalItems + totalItems) % totalItems;
+      const nextIndex = (currentIndex + 1) % totalItems;
+      
+      // Crear efecto de salida para los elementos actuales
+      if (direction) {
+        const currentItems = carouselTrack.querySelectorAll('.carousel-item');
+        currentItems.forEach(item => {
+          item.style.opacity = '0';
+          item.style.transform = direction === 'next' ? 'translateX(-20px) scale(0.7)' : 'translateX(20px) scale(0.7)';
+        });
+      }
+      
+      // Esperar brevemente para la animación de salida
+      setTimeout(() => {
+        // Eliminar el contenido actual del carrusel
+        carouselTrack.innerHTML = '';
+        
+        // Elemento anterior
+        const prevElement = document.createElement('div');
+        prevElement.className = 'carousel-item secondary-item opacity-0 transform scale-75 transition-all duration-500 cursor-pointer';
+        prevElement.dataset.id = items[prevIndex].id;
+        prevElement.innerHTML = `
+          <div class="relative">
+            <div class="aspect-[2/3] w-32 md:w-48 lg:w-64 overflow-hidden rounded-lg shadow-lg">
+              <img 
+                src="${items[prevIndex].imageSrc}" 
+                alt="${items[prevIndex].altText}" 
+                class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+              />
+            </div>
+          </div>
+          <p class="text-center text-primary mt-3 text-sm md:text-base font-medium">${items[prevIndex].name}</p>
+        `;
+        prevElement.addEventListener('click', () => {
+          currentIndex = prevIndex;
+          updateCarousel('prev');
+        });
+        
+        // Elemento activo
+        const activeElement = document.createElement('div');
+        activeElement.className = 'carousel-item primary-item z-10 opacity-0 transition-all duration-500 cursor-pointer';
+        activeElement.dataset.id = items[currentIndex].id;
+        activeElement.innerHTML = `
+          <div class="relative">
+            <div class="aspect-[2/3] w-48 md:w-64 lg:w-80 overflow-hidden rounded-lg shadow-2xl ring-4 ring-primary-400 dark:ring-primary-600">
+              <img 
+                src="${items[currentIndex].imageSrc}" 
+                alt="${items[currentIndex].altText}" 
+                class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+              />
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-center text-xl md:text-2xl font-bold text-primary-800 dark:text-primary-400">${items[currentIndex].name}</p>
+            <div class="flex flex-wrap justify-center gap-2 mt-2">
+              ${items[currentIndex].yearsElite && items[currentIndex].yearsElite.length > 0 ? 
+                items[currentIndex].yearsElite.map(year => 
+                  `<span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">
+                    ${year}
+                  </span>`
+                ).join('') : 
+                `<span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-xs rounded-full">
+                  Negro Mayor
+                </span>`
+              }
+            </div>
+          </div>
+        `;
+        
+        // Elemento siguiente
+        const nextElement = document.createElement('div');
+        nextElement.className = 'carousel-item secondary-item opacity-0 transform scale-75 transition-all duration-500 cursor-pointer';
+        nextElement.dataset.id = items[nextIndex].id;
+        nextElement.innerHTML = `
+          <div class="relative">
+            <div class="aspect-[2/3] w-32 md:w-48 lg:w-64 overflow-hidden rounded-lg shadow-lg">
+              <img 
+                src="${items[nextIndex].imageSrc}" 
+                alt="${items[nextIndex].altText}" 
+                class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600/4A0404/FFFFFF?text=Sin+imagen';"
+              />
+            </div>
+          </div>
+          <p class="text-center text-primary mt-3 text-sm md:text-base font-medium">${items[nextIndex].name}</p>
+        `;
+        nextElement.addEventListener('click', () => {
+          currentIndex = nextIndex;
+          updateCarousel('next');
+        });
+        
+        // Añadir elementos al carrusel
+        carouselTrack.appendChild(prevElement);
+        carouselTrack.appendChild(activeElement);
+        carouselTrack.appendChild(nextElement);
+        
+        // Animar los elementos para que aparezcan
+        setTimeout(() => {
+          const newItems = carouselTrack.querySelectorAll('.carousel-item');
+          newItems.forEach(item => {
+            if (item.classList.contains('secondary-item')) {
+              item.style.opacity = '0.6';
+              item.style.transform = 'scale(0.75)';
+            } else {
+              item.style.opacity = '1';
+              item.style.transform = 'scale(1)';
+            }
+          });
+          
+          // Permitir interacciones nuevamente después de la animación
+          setTimeout(() => {
+            isAnimating = false;
+          }, 300);
+        }, 50);
+      }, 300);
+    }
+    
+    // Event listeners para los botones
+    prevBtn.addEventListener('click', () => {
+      if (isAnimating) return;
+      currentIndex--;
+      updateCarousel('prev');
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      if (isAnimating) return;
+      currentIndex++;
+      updateCarousel('next');
+    });
+    
+    // Event listeners para los indicadores
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        if (isAnimating || currentIndex === index) return;
+        const direction = index > currentIndex ? 'next' : 'prev';
+        currentIndex = index;
+        updateCarousel(direction);
+      });
+    });
+    
+    // Inicializar carrusel
+    updateCarousel();
+    
+    // Soporte para gestos táctiles (swipe)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    const handleGesture = () => {
+      if (isAnimating) return;
+      
+      const minSwipeDistance = 50;
+      const swipeDistance = touchEndX - touchStartX;
+      
+      if (swipeDistance > minSwipeDistance) {
+        // Swipe derecha (mostrar anterior)
+        currentIndex--;
+        updateCarousel('prev');
+      } else if (swipeDistance < -minSwipeDistance) {
+        // Swipe izquierda (mostrar siguiente)
+        currentIndex++;
+        updateCarousel('next');
+      }
+    };
+    
+    carouselTrack.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    carouselTrack.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+    
+    // Auto rotación opcional (comentado por defecto)
+    /*
+    const autoRotationInterval = 5000; // 5 segundos
+    let autoRotationTimer;
+    
+    function startAutoRotation() {
+      autoRotationTimer = setInterval(() => {
+        if (!document.hidden && !isAnimating) {
+          currentIndex++;
+          updateCarousel('next');
+        }
+      }, autoRotationInterval);
+    }
+    
+    function stopAutoRotation() {
+      clearInterval(autoRotationTimer);
+    }
+    
+    // Detener la rotación cuando el usuario interactúa
+    carouselTrack.addEventListener('mouseenter', stopAutoRotation);
+    carouselTrack.addEventListener('touchstart', stopAutoRotation);
+    
+    // Reanudar cuando se aleja
+    carouselTrack.addEventListener('mouseleave', startAutoRotation);
+    
+    // Iniciar rotación automática
+    startAutoRotation();
+    */
+    
+    // Soporte para navegación con teclado
+    document.addEventListener('keydown', e => {
+      if (isAnimating) return;
+      
+      if (e.key === 'ArrowLeft') {
+        currentIndex--;
+        updateCarousel('prev');
+      } else if (e.key === 'ArrowRight') {
+        currentIndex++;
+        updateCarousel('next');
+      }
+    });
+  });
+</script>
+
+<style>
+  .carousel-wrapper {
+    perspective: 1000px;
+  }
+
+  .carousel-container {
+    max-width: 100%;
+  }
+
+  .carousel-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .carousel-item {
+    flex-shrink: 0;
+    text-align: center;
+    margin: 0 10px;
+  }
+  
+  .primary-item img {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .secondary-item {
+    opacity: 0.85;
+  }
+  
+  @media (max-width: 640px) {
+    .carousel-item.secondary-item {
+      display: none;
+    }
+    
+    .carousel-controls {
+      width: 100%;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .carousel-item.secondary-item {
+      transform: scale(0.6);
+    }
+  }
+</style>

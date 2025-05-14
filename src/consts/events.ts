@@ -15,7 +15,7 @@ export const EVENTS: Event[] = [
     gallery: [
       "5.webp",
       "cover.webp",
-      "AP3.webp",
+      "ARP3.webp",
       "ARP1.webp",
       "ARP2.webp",
       "ARP4.webp",
@@ -33,6 +33,26 @@ export const EVENTS: Event[] = [
       "NWL4.webp",
       "NWL5.webp",
     ],
+    gallerySponsor: [
+      {
+        id: "celebraperu",
+        name: "Celebra Perú",
+        url: "https://www.youtube.com/@celebraperu",
+        logo: {
+          width: 100,
+          height: 100,
+        },
+      },
+      {
+        id: "notiwanka",
+        name: "NotiWanka",
+        url: "https://www.facebook.com/NotiWanka.pe",
+        logo: {
+          width: 100,
+          height: 100,
+        },
+      }
+    ]
   },
   {
     id: "0559e10d-27ee-4e92-ac3e-7e99eb946f30",
