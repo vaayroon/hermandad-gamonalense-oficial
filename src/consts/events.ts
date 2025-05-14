@@ -15,7 +15,7 @@ export const EVENTS: Event[] = [
     gallery: [
       "5.webp",
       "cover.webp",
-      "AP3.webp",
+      "ARP3.webp",
       "ARP1.webp",
       "ARP2.webp",
       "ARP4.webp",
@@ -51,7 +51,7 @@ export const EVENTS: Event[] = [
           width: 100,
           height: 100,
         },
-      },
+      }
     ]
   },
   {

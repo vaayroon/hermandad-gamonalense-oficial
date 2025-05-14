@@ -75,7 +75,9 @@ export const prerender = true
 			/>
 		</section>
 		<section class="container mx-auto px-4 py-8 md:py-12">
-			<Credits credits={event.gallerySponsor}/>
+			{event.gallerySponsor && event.gallerySponsor.length > 0 && (
+				<Credits credits={event.gallerySponsor}/>
+			)}
 		</section>
 	</main>
 </Layout>
