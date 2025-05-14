@@ -1,5 +1,6 @@
 ---
 // src/components/events/EventFilter.astro
+import { EventCategories } from '@/consts/event-category';
 import type { EventCategory } from '../../types/Event';
 
 interface Props {
@@ -14,7 +15,7 @@ const { categories } = Astro.props;
     <button
       data-categorybutton={category.id}
       class={`
-        ${category.id == 'todos' ? "bg-primary-500 text-white" : "bg-white text-primary-900"}
+        ${category.id == EventCategories.All.id ? "bg-primary-500 text-white" : "bg-white text-primary-900"}
         px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base rounded-full 
         hover:bg-primary-500 hover:text-white transition-colors duration-200
         whitespace-nowrap min-w-[80px] sm:min-w-[100px] flex-shrink-0

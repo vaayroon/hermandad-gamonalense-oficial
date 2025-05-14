@@ -1,0 +1,167 @@
+---
+import type { Sponsors } from "@/types/Sponsors";
+import Typography from "../Typography.astro";
+
+export interface Props {
+  credits?: Sponsors[];
+  title?: string;
+}
+
+const { credits = [], title = "Créditos Fotográficos" } = Astro.props;
+
+const svgs = await Promise.all(
+  credits.map(async (credit) => {
+    const svg = await import(`/img/sponsors/photography/${credit.logo.name ?? credit.id}.svg`);
+    return svg.default;
+  })
+);
+---
+
+<div class="credits-section my-16">
+  <Typography
+    as="h2"
+    variant="h2"
+    color="primary400"
+    class="mb-6 transform translate-y-4 transition-all duration-700"
+    id="credits-title"
+  >
+    {title}
+  </Typography>
+
+  <div
+    class="credits-container flex flex-wrap justify-center items-center gap-8 md:gap-12"
+  >
+    {
+      credits.map((credit, index) => (
+        <div
+          class="credit-item opacity-0 transform translate-y-4 transition-all duration-500"
+          style={`transition-delay: ${index * 100}ms`}
+          data-credit-index={index}
+        >
+          <a
+            class="credit-link flex flex-col items-center group"
+            title={`Visita la página de ${credit.name}`}
+            href={credit.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Link con el logo de ${credit.name} que lleva a ${credit.url}`}
+          >
+            <div
+              class="credit-logo-container relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden 
+                      shadow-lg transform transition-all duration-300 group-hover:scale-110 
+                      group-hover:shadow-x flex items-center justify-center"
+            >
+              <img
+                src={`/img/sponsors/photography/${credit.logo.name ?? credit.id}.svg`}
+                width={credit.logo.width}
+                height={credit.logo.height}
+                loading="lazy"
+                fetchpriority="low"
+                alt={`Logo de ${credit.name}`}
+                class="w-16 h-16 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  // Función para observar elementos y activar animaciones
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("opacity-0", "translate-y-4");
+          entry.target.classList.add("opacity-100", "translate-y-0");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // Observar el título
+  const title = document.getElementById("credits-title");
+  if (title) observer.observe(title);
+
+  // Observar cada elemento de crédito
+  document.querySelectorAll(".credit-item").forEach((item) => {
+    observer.observe(item);
+  });
+
+  // Agregar efectos en hover
+  document.querySelectorAll(".credit-link").forEach((link) => {
+    link.addEventListener("mouseenter", () => {
+      const container = link.querySelector(".credit-logo-container");
+      container?.classList.add("pulse-effect");
+    });
+
+    link.addEventListener("mouseleave", () => {
+      const container = link.querySelector(".credit-logo-container");
+      container?.classList.remove("pulse-effect");
+    });
+  });
+</script>
+
+<style>
+  .credits-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .credits-section::before {
+    content: "";
+    position: absolute;
+    top: -5rem;
+    left: -5rem;
+    width: 10rem;
+    height: 10rem;
+    background: radial-gradient(
+      circle,
+      rgba(var(--color-primary-200), 0.2) 0%,
+      rgba(var(--color-primary-200), 0) 70%
+    );
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .credits-section::after {
+    content: "";
+    position: absolute;
+    bottom: -5rem;
+    right: -5rem;
+    width: 15rem;
+    height: 15rem;
+    background: radial-gradient(
+      circle,
+      rgba(var(--color-primary-200), 0.1) 0%,
+      rgba(var(--color-primary-200), 0) 70%
+    );
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .credit-link:active .credit-logo-container {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(var(--color-primary-400), 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(var(--color-primary-400), 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(var(--color-primary-400), 0);
+    }
+  }
+
+  .pulse-effect {
+    animation: pulse 1.5s infinite;
+  }
+</style>

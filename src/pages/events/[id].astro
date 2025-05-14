@@ -5,6 +5,7 @@ import { EVENTS } from "@/consts/events"
 import Layout from "@/layouts/Layout.astro"
 import type { Preload } from "@/types/Preload"
 import CyclicGallery from "@/components/gallery/CyclicGallery.astro"
+import Credits from "@/components/events/Credits.astro"
 
 export function getStaticPaths() {
 	return EVENTS.map(({ id }) => {
@@ -73,8 +74,8 @@ export const prerender = true
         images={imageUrls}
 			/>
 		</section>
-		<section
-		>
+		<section class="container mx-auto px-4 py-8 md:py-12">
+			<Credits credits={event.gallerySponsor}/>
 		</section>
 	</main>
 </Layout>
