@@ -90,5 +90,36 @@ export const BROTHERS: Brother[] = addGetters([
 			},
 		],
 		yearsElite: [],
+	},
+	{
+		id: "diegocondorlopez",
+		name: "Tuyico",
+		realName: "Diego Cóndor Lopez",
+		birthDate: new Date(1994, 8, 28),
+		height: 1.73,
+		age: 30,
+		weight: 80,
+		country: "pe",
+		versus: "kevincondorromero",
+		guard: "Derecha",
+		reach: 162,
+		socials: {
+			twitch: "https://www.facebook.com/diegoo.condorlopez",
+			instagram: "https://instagram.com/diegocl94",
+			twitter: "https://www.facebook.com/diegoo.condorlopez",
+			youtube: "https://www.facebook.com/diegoo.condorlopez",
+			tiktok: "https://tiktok.com/@diegocl94",
+		},
+		clips: [
+			{
+				text: "Cuanto mas grande el reto, mas grande la gloria",
+				url: "",
+			},
+			{
+				text: "Ganar, ganar, ganar y ganar",
+				url: "",
+			},
+		],
+		yearsElite: [],
 	}
 ] as const)
