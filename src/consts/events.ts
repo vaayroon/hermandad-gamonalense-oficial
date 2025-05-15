@@ -76,5 +76,16 @@ export const EVENTS: Event[] = [
       "TheBand.webp",
       "WithTheBand.webp"
     ],
+    gallerySponsor: [
+      {
+        id: "bandazapatitosblancos",
+        name: "Banda Zapatitos Blancos",
+        url: "https://www.facebook.com/profile.php?id=100063493180945",
+        logo: {
+          width: 100,
+          height: 100,
+        },
+      }
+    ]
   }
 ];
