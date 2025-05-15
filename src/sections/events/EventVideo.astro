@@ -1,0 +1,41 @@
+---
+import LiteYouTube from "@/components/videos/LiteYouTube.astro"
+import Typography from "@/components/Typography.astro"
+import { EVENTS } from "@/consts/events"
+
+const { eventId } = Astro.props
+
+const event = EVENTS.find((event) => event.id === eventId)
+
+if (!event) return null
+
+const { title, videoId, category } = event
+---
+{
+	videoId && (
+    <section class="mt-10 overflow-hidden px-2 pt-16 pb-16 sm:pt-32 sm:pb-32 md:pt-32">
+      <Typography as="h3" variant="h3" color="primary400" class:list={"text-center"}>
+        ¡Revive el evento!
+      </Typography>
+
+      <Typography
+        as="p"
+        variant="body"
+        color="primary"
+        class:list={"mx-auto mt-4 max-w-[250px] text-center text-wrap"}
+      >
+        Vuelve a ver el evento {title}
+      </Typography>
+
+      <div class="relative mt-8">
+        {videoId && (
+          <LiteYouTube
+            videoId={videoId}
+            backgroundImage={`/img/events/${category.urlname}/${eventId}/cover.webp`}
+            title={`Reproducir video del evento ${eventId}`}
+          />
+        )}
+      </div>
+    </section>
+	)
+}
