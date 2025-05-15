@@ -10,6 +10,7 @@ export interface Event {
   imageUrl: string;
   gallery: string[];
   gallerySponsor?: Sponsors[];
+  videoId?: string
 }
 
 export interface EventCategory {
