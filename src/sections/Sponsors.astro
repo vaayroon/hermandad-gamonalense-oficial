@@ -19,6 +19,7 @@ import { SPONSORS } from "@/consts/sponsors"
 			aria-label="Link con el logo/foto del Prioste"
 		>
 			<img
+				decoding="async"
 				src={"//FIXME: Add the image of the Prioste and the link to the page"}
 				loading="lazy"
 				width={128}
@@ -48,6 +49,7 @@ import { SPONSORS } from "@/consts/sponsors"
 					aria-label={`Link con el logo de ${name} que lleva a ${url}`}
 				>
 					<img
+						decoding="async"
 						src={`/img/sponsors/${logo.name ?? id}.webp`}
 						width={logo.width}
 						loading="lazy"

@@ -1,9 +1,19 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import tailwind from '@astrojs/tailwind';
+import tailwind from "@astrojs/tailwind";
 
-// https://astro.build/config
+import sitemap from "@astrojs/sitemap";
+
 export default defineConfig({
-  integrations: [tailwind()]
+  build: {
+    inlineStylesheets: "always",
+  },
+  compressHTML: true,
+  prefetch: true,
+  devToolbar: {
+    enabled: false,
+  },
+  integrations: [tailwind(), sitemap()],
+  site: "https://hermandad-gamonalense-oficial.vercel.app",
 });

@@ -52,7 +52,8 @@ export const EVENTS: Event[] = [
           height: 100,
         },
       }
-    ]
+    ],
+    videoId: "AGSY91m7FuA"
   },
   {
     id: "0559e10d-27ee-4e92-ac3e-7e99eb946f30",
@@ -76,5 +77,17 @@ export const EVENTS: Event[] = [
       "TheBand.webp",
       "WithTheBand.webp"
     ],
+    gallerySponsor: [
+      {
+        id: "bandazapatitosblancos",
+        name: "Banda Zapatitos Blancos",
+        url: "https://www.facebook.com/profile.php?id=100063493180945",
+        logo: {
+          width: 100,
+          height: 100,
+        },
+      }
+    ],
+    videoId: "c-u4quZrClM"
   }
 ];

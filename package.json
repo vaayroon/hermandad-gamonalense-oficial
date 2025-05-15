@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.2",
     "@midudev/tailwind-animations": "^0.1.0",
     "@types/node": "^22.8.4",

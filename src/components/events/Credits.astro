@@ -13,8 +13,8 @@ const { credits = [], title = "Créditos Fotográficos" } = Astro.props;
 
 <div class="credits-section my-16">
   <Typography
-    as="h2"
-    variant="h2"
+    as="h3"
+    variant="h3"
     color="primary400"
     class="mb-6 transform translate-y-4 transition-all duration-700"
     id="credits-title"
@@ -46,6 +46,7 @@ const { credits = [], title = "Créditos Fotográficos" } = Astro.props;
                       group-hover:shadow-x flex items-center justify-center"
             >
               <img
+                decoding="async"
                 src={`/img/sponsors/photography/${credit.logo.name ?? credit.id}.svg`}
                 width={credit.logo.width}
                 height={credit.logo.height}
