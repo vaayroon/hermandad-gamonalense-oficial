@@ -89,5 +89,19 @@ export const EVENTS: Event[] = [
       }
     ],
     videoId: "c-u4quZrClM"
+  },
+  {
+    id: "c514ec7f-422b-4ef9-8a17-12e8a9a6e608",
+    title: "Matrimonio Junior & Liz Pilar",
+    date: "2025-06-20",
+    category: EventCategories.Social,
+    description: "Nos llena de alegría invitarte a celebrar con nosotros el inicio de esta nueva etapa en nuestras vidas. Será un honor contar con tu presencia en nuestra boda.",
+    imageUrl: "",
+    gallery: [
+      "cover.webp"
+    ],
+    gallerySponsor: [],
+    videoId: "7Ktku29YGRg",
+    videoAspectRatio: "9/16"
   }
 ];
