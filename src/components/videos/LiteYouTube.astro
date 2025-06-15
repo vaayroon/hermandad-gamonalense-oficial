@@ -3,15 +3,16 @@ interface Props {
   videoId: string;
   title?: string;
   backgroundImage?: string;
+  aspectRatio?: string; // Optional, default is 16:9
 }
 
-const { videoId, title, backgroundImage } = Astro.props;
+const { videoId, title, backgroundImage, aspectRatio = "16/9" } = Astro.props;
 ---
 
 <lite-youtube
   class="rounded-lg"
   videoid={videoId}
-  style={`background-image: url('${backgroundImage}')`}
+  style={backgroundImage ? `background-image: url('${backgroundImage}')` : ""}
   tabindex="0"
   aria-label="button"
 >
@@ -295,7 +296,8 @@ const { videoId, title, backgroundImage } = Astro.props;
   customElements.define("lite-youtube", LiteYTEmbed);
 </script>
 
-<style is:global>
+<!-- forward the aspectRatio to style -->
+<style is:global define:vars={{ aspectRatio }}>
   lite-youtube {
     background-color: #000;
     position: relative;
@@ -304,7 +306,7 @@ const { videoId, title, backgroundImage } = Astro.props;
     background-position: center center;
     background-size: cover;
     cursor: pointer;
-    aspect-ratio: 16/9;
+    aspect-ratio: var(--aspectRatio, 16 / 9);
     width: 100%;
     height: auto;
     border: 2px solid var(--color-accent);
