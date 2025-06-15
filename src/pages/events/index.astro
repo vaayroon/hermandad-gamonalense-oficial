@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import EventFilter from '@/components/events/EventFilter.astro';
 import EventList from '@/components/events/EventList.astro';
+import EventHero from '@/sections/events/EventHero.astro';
 import { EVENTS } from "@/consts/events"
 import { EVENT_CATEGORIES } from "@/consts/event-category"
 
@@ -13,6 +14,7 @@ import { EVENT_CATEGORIES } from "@/consts/event-category"
   canonical="https://hermandad-gamonalense-oficial.vercel.app/"
 >
   <main>
+    <EventHero />
     <EventFilter categories={EVENT_CATEGORIES} />
     <EventList events={EVENTS} />
   </main>

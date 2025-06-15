@@ -1,0 +1,120 @@
+---
+import { EVENTS } from "@/consts/events";
+import { EventCategories } from "@/consts/event-category";
+import type { Event } from "@/types/Event";
+import Typography from "@/components/Typography.astro";
+
+// Get current date
+const currentDate = new Date();
+// Format: YYYY-MM-DD
+const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+
+// Calculate date 3 months from now
+const threeMonthsFromNow = new Date();
+threeMonthsFromNow.setMonth(threeMonthsFromNow.getMonth() + 3);
+const formattedThreeMonthsFromNow = threeMonthsFromNow.toISOString().split('T')[0];
+
+// Calculate date 1 year from now (for Main events)
+const oneYearFromNow = new Date();
+oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+const formattedOneYearFromNow = oneYearFromNow.toISOString().split('T')[0];
+
+// Filter events by category and date
+function getUpcomingEventsByCategory(categoryId: string) {
+  const maxDate = categoryId === 'main' ? formattedOneYearFromNow : formattedThreeMonthsFromNow;
+  
+  return EVENTS.filter(event => 
+    event.category.id === categoryId && 
+    event.date >= formattedCurrentDate && 
+    event.date <= maxDate
+  ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+}
+
+// Get one upcoming event for each category
+const upcomingMainEvent = getUpcomingEventsByCategory('main');
+const upcomingInstitutionalEvent = getUpcomingEventsByCategory('institutional');
+const upcomingSocialEvent = getUpcomingEventsByCategory('social');
+
+// Combine all upcoming events
+const upcomingEvents: Event[] = [
+  upcomingMainEvent, 
+  upcomingInstitutionalEvent, 
+  upcomingSocialEvent
+].filter(Boolean) as Event[];
+
+// Check if we have any upcoming events
+const hasUpcomingEvents = upcomingEvents.length > 0;
+
+// Define category colors and classes
+const categoryColors = {
+  main: "bg-[#e63946]",
+  institutional: "bg-[#457b9d]",
+  social: "bg-[#2a9d8f]"
+};
+---
+
+{hasUpcomingEvents && (
+  <section class="py-8 px-4 md:py-12 md:px-6 lg:py-16 lg:px-8">
+    <Typography as="h1" variant="h1" color="primary400" class="text-center mb-6 md:mb-8 lg:mb-10">
+      Próximos Eventos
+    </Typography>
+    
+    <div class="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
+      {upcomingEvents.map((event) => (
+        <a 
+          href={`/events/${event.id}`} 
+          class="flex flex-col bg-transparent rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] max-w-md min-h-[320px]"
+        >
+          <div class="absolute top-4 right-4 z-10">
+            <span class={`inline-block px-3 py-1 rounded-full text-sm font-semibold text-white ${categoryColors[event.category.id as keyof typeof categoryColors]}`}>
+              {event.category.name}
+            </span>
+          </div>
+          
+          <div class="relative w-full pt-[56.25%] overflow-hidden">
+            {event.imageUrl ? (
+              <img 
+                src={event.imageUrl} 
+                alt={event.title} 
+                loading="lazy"
+                class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+              />
+            ) : (
+              <div class="absolute top-0 left-0 w-full h-full bg-gray-200 flex items-center justify-center">
+                <img 
+                  src={`/img/events/${event.category.urlname}/${event.id}/cover.webp`} 
+                  alt={event.title} 
+                  loading="lazy"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onerror="this.onerror=null; this.src='/img/HG.jpg';"
+                />
+              </div>
+            )}
+          </div>
+          
+          <div class="p-5 flex-grow flex flex-col">
+            <h3 class="text-primary text-xl font-semibold mb-2">{event.title}</h3>
+            <div class="mt-auto">
+              <time datetime={event.date} class="text-sm text-primary opacity-80">
+                {new Date(event.date).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+{!hasUpcomingEvents && (
+  <section class="flex flex-col justify-center items-center">
+    <Typography as="h1" variant="h1" color="primary400" class="text-center">
+      Eventos
+    </Typography>
+  </section>
+)}
+

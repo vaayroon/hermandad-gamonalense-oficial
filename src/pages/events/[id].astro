@@ -71,9 +71,13 @@ export const prerender = true
 			>
 				{event.description}
 			</Typography>
-			<CyclicGallery
-        images={imageUrls}
-			/>
+
+			{event.date && new Date(event.date) < new Date() && (
+				<CyclicGallery
+					images={imageUrls}
+				/>
+			)}
+
 		</section>
 		<EventVideo eventId={id} />
 		<section class="container mx-auto px-4 py-8 md:py-12">
