@@ -9,32 +9,39 @@ const event = EVENTS.find((event) => event.id === eventId)
 
 if (!event) return null
 
-const { title, videoId, category } = event
+const { title, videoId, category, date, videoAspectRatio } = event
 ---
 {
 	videoId && (
-    <section class="mt-10 overflow-hidden px-2 pt-16 pb-16 sm:pt-32 sm:pb-32 md:pt-32">
-      <Typography as="h3" variant="h3" color="primary400" class:list={"text-center"}>
-        ¡Revive el evento!
-      </Typography>
+    <section class="mt-10 overflow-hidden px-2 pt-16 pb-16 sm:pt-32 sm:pb-32 md:pt-32 flex flex-col justify-center items-center">
+      {
+        date && new Date(date) < new Date() && (
+          <Typography as="h3" variant="h3" color="primary400" class:list={"text-center"}>
+            ¡Revive el evento!
+          </Typography>
 
-      <Typography
-        as="p"
-        variant="body"
-        color="primary"
-        class:list={"mx-auto mt-4 max-w-[250px] text-center text-wrap"}
+          <Typography
+            as="p"
+            variant="body"
+            color="primary"
+            class:list={"mx-auto mt-4 max-w-[250px] text-center text-wrap"}
+          >
+            Vuelve a ver el evento {title}
+          </Typography>
+        )
+      }
+
+      <div
+        class:list={{
+          "relative mt-8 w-full": true,
+          "max-w-[240px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] xl:max-w-[480px] 2xl:max-w-[540px] aspect-[9/16]": videoAspectRatio === "9/16"
+        }}
       >
-        Vuelve a ver el evento {title}
-      </Typography>
-
-      <div class="relative mt-8">
-        {videoId && (
-          <LiteYouTube
-            videoId={videoId}
-            backgroundImage={`/img/events/${category.urlname}/${eventId}/cover.webp`}
-            title={`Reproducir video del evento ${eventId}`}
-          />
-        )}
+        <LiteYouTube
+          aspectRatio={videoAspectRatio}
+          videoId={videoId}
+          title={`Reproducir video del evento ${eventId}`}
+        />
       </div>
     </section>
 	)
