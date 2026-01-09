@@ -20,6 +20,9 @@ importers:
       astro:
         specifier: ^4.16.6
         version: 4.16.6(@types/node@22.8.4)(rollup@4.55.1)(typescript@5.6.3)
+      astro-portabletext:
+        specifier: ^0.13.0
+        version: 0.13.0(astro@4.16.6(@types/node@22.8.4)(rollup@4.55.1)(typescript@5.6.3))
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -2758,6 +2761,12 @@ packages:
   arrify@2.0.1:
     resolution: {integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==}
     engines: {node: '>=8'}
+
+  astro-portabletext@0.13.0:
+    resolution: {integrity: sha512-Z9N32H7eRP8tuSavnJqUm4vKqHj59oYEyhqq4YiwsAcFnwDbepbb6cmIRGG5S+eejvHibrjyAKdQxhVINYXCbA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+    peerDependencies:
+      astro: '>=4.6.0'
 
   astro@4.16.6:
     resolution: {integrity: sha512-LMMbjr+4aN26MOyJzTdjM+Y+srpAIkx7IX9IcdF3eHQLGr8PgkioZp+VQExRfioDIyA2HY6ottVg3QccTzJqYA==}
@@ -9339,6 +9348,12 @@ snapshots:
   array-union@2.1.0: {}
 
   arrify@2.0.1: {}
+
+  astro-portabletext@0.13.0(astro@4.16.6(@types/node@22.8.4)(rollup@4.55.1)(typescript@5.6.3)):
+    dependencies:
+      '@portabletext/toolkit': 5.0.1
+      '@portabletext/types': 4.0.1
+      astro: 4.16.6(@types/node@22.8.4)(rollup@4.55.1)(typescript@5.6.3)
 
   astro@4.16.6(@types/node@22.8.4)(rollup@4.55.1)(typescript@5.6.3):
     dependencies:

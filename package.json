@@ -15,6 +15,7 @@
     "@sanity/astro": "^3.2.11",
     "@sanity/client": "^7.14.0",
     "astro": "^4.16.6",
+    "astro-portabletext": "^0.13.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-is": "^19.2.3",
