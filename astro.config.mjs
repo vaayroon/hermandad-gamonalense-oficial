@@ -5,6 +5,8 @@ import tailwind from "@astrojs/tailwind";
 
 import sitemap from "@astrojs/sitemap";
 
+import sanity from "@sanity/astro";
+
 export default defineConfig({
   build: {
     inlineStylesheets: "always",
@@ -14,6 +16,6 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [tailwind(), sitemap()],
-  site: "https://hermandad-gamonalense-oficial.vercel.app",
+  integrations: [tailwind(), sitemap(), sanity()],
+  site: "https://hermandadgamonalense.com/",
 });

@@ -15,17 +15,19 @@ const isAlly = (ally: Brother, currentBrother: Brother): boolean => {
 }
 
 const addGetters = (brothers: Brother[]): Brother[] => {
-	return brothers.map((b) => ({
-		...b,
-		get age() {
-			return calculateAge(this.birthDate)
-		},
-		get allies() {
-			return brothers
-				.filter(ally => isAlly(ally, this))
-				.map(ally => ally.id)
-		}
-	}))
+  return brothers.map((b) => {
+    const { birthDate } = b
+    return {
+      ...b,
+      get age() {
+        return calculateAge(birthDate)
+      },
+      get allies() {
+        // ...existing logic...
+        return BROTHERS.filter((ally) => isAlly(ally, b))
+      }
+    }
+  })
 }
 
 export const BROTHERS: Brother[] = addGetters([

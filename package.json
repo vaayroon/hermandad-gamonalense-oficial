@@ -12,7 +12,14 @@
   },
   "dependencies": {
     "@fontsource-variable/jost": "^5.1.0",
+    "@sanity/astro": "^3.2.11",
+    "@sanity/client": "^7.14.0",
     "astro": "^4.16.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-is": "^19.2.3",
+    "sanity": "^5.2.0",
+    "styled-components": "^6.2.0",
     "three": "^0.169.0"
   },
   "devDependencies": {
