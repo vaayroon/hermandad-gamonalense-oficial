@@ -1,11 +1,16 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import BrothersCarousel from "@/components/gallery/BrothersCarousel.astro"
-import { BROTHERS } from "@/consts/brothers"
 import Typography from "@/components/Typography.astro";
 import type { Preload } from "@/types/Preload";
 
-const eliteBrothers = BROTHERS.filter(brother => brother.yearsElite && brother.yearsElite.length > 0);
+import { sanityClient } from "sanity:client";
+
+const POSTS_QUERY = `*[
+  _type == "brother"
+  && defined(yearsElite)]{id, name, birthDate, yearsElite}
+`;
+const sanityEliteBrothers = await sanityClient.fetch<{ id: string; name: string; birthDate: string; yearsElite: number[] }[]>(POSTS_QUERY);
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffledArray = [...array];
@@ -18,7 +23,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffledArray;
 }
 
-const randomizedEliteBrothers = eliteBrothers && eliteBrothers.length > 0 ? shuffleArray(eliteBrothers) : [];
+const randomizedEliteBrothers = sanityEliteBrothers && sanityEliteBrothers.length > 0 ? shuffleArray(sanityEliteBrothers) : [];
 
 const carouselItems = randomizedEliteBrothers.map(brother => ({
   id: brother.id,

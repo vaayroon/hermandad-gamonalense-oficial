@@ -1,6 +1,7 @@
 ---
 import BrotherBigImage from "@/components/BrotherBigImage.astro"
 import BrotherClips from "@/components/BrotherClips.astro"
+import BrotherAgeInfo from "@/components/BrotherAgeInfo.astro"
 import BrotherDetailInfo from "@/components/BrotherDetailInfo.astro"
 import BrotherSocialLink from "@/components/BrotherSocialLink.astro"
 import Typography from "@/components/Typography.astro"
@@ -16,15 +17,26 @@ import { COUNTRIES } from "@/consts/countries"
 import Layout from "@/layouts/Layout.astro"
 import type { Preload } from "@/types/Preload"
 
-export function getStaticPaths() {
-	return BROTHERS.map(({ id }) => {
-		return { params: { id } }
-	})
+import type { SanityDocument } from "@sanity/client";
+import { sanityClient } from "sanity:client";
+import type { Brother } from "@/types/Brother"
+
+export async function getStaticPaths() {
+	const POSTS_QUERY = `*[
+		_type == "brother"
+	]{id, name, birthDate, age, height, weight, country, versus, guard, reach, socials, clips, yearsElite}`;
+	
+	const sanityBrothers: Brother[] = await sanityClient.fetch<Brother[]>(POSTS_QUERY);
+	return sanityBrothers.map((brother) => ({
+		params: { id: brother.id },
+		props: { brother },
+	}));
 }
 
+const { brother } = Astro.props;
 const { id } = Astro.params
 
-const [brother] = BROTHERS.filter((brother) => brother.id === id)
+// const [brother] = BROTHERS.filter((brother) => brother.id === id)
 
 const countryName = COUNTRIES[brother.country]
 
@@ -74,7 +86,7 @@ export const prerender = true
 				<div
 					class="order-3 mx-auto flex w-full max-w-[450px] flex-col md:w-auto md:max-w-none md:gap-y-20 lg:w-1/4"
 				>
-					<BrotherDetailInfo title="Edad" value={`${brother.age} años`} id="brother-edad" />
+					<BrotherAgeInfo title="Edad" stringBirthDate={brother.birthDate.toString()} id="brother-edad" />
 					{
 						brother.weight && (
 							<BrotherDetailInfo title="Peso" value={`${brother.weight} kg`} id="brother-peso" />

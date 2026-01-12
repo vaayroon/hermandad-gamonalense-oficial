@@ -1,7 +1,16 @@
 import { type Brother } from "@/types/Brother"
 
 const calculateAge = (birthDate: Date): number => {
-	return new Date(new Date().getTime() - birthDate.getTime()).getFullYear() - 1970
+	const today = new Date()
+	let age = today.getFullYear() - birthDate.getFullYear()
+	const monthDifference = today.getMonth() - birthDate.getMonth()
+	if (
+		monthDifference < 0 ||
+		(monthDifference === 0 && today.getDate() < birthDate.getDate())
+	) {
+		age--
+	}
+	return age
 }
 
 const isAlly = (ally: Brother, currentBrother: Brother): boolean => {
@@ -35,7 +44,7 @@ export const BROTHERS: Brother[] = addGetters([
 		id: "kevincondorromero",
 		name: "Vaayroon",
 		realName: "Bryan Kevin Cóndor Romero",
-		birthDate: new Date(1996, 4, 12),
+		birthDate: new Date(1996, 3, 12),
 		height: 1.74,
 		age: 28,
 		weight: 86,
@@ -66,7 +75,7 @@ export const BROTHERS: Brother[] = addGetters([
 		id: "panocondorlopez",
 		name: "Pequeño Tuyico",
 		realName: "Sthephano Cóndor Lopez",
-		birthDate: new Date(2001, 9, 19),
+		birthDate: new Date(2001, 8, 19),
 		height: 1.75,
 		age: 23,
 		weight: 82,
@@ -97,7 +106,7 @@ export const BROTHERS: Brother[] = addGetters([
 		id: "diegocondorlopez",
 		name: "Tuyico",
 		realName: "Diego Cóndor Lopez",
-		birthDate: new Date(1994, 8, 28),
+		birthDate: new Date(1994, 7, 28),
 		height: 1.73,
 		age: 30,
 		weight: 80,

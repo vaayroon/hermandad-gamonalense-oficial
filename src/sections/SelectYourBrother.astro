@@ -5,8 +5,14 @@ import Typography from "@/components/Typography.astro"
 import { BROTHERS } from "@/consts/brothers"
 import { COUNTRIES } from "@/consts/countries"
 import HorizontalScroll from "@/icons/horizontalScroll.astro"
+import type { Brother } from "@/types/Brother"
 
-const listOfBrothers = BROTHERS.map((brother) => {
+import { sanityClient } from "sanity:client";
+
+const POSTS_QUERY = `*[_type == "brother"]{id, name, weight, country, rotate, versus}`;
+const sanityBrothers = await sanityClient.fetch<Brother[]>(POSTS_QUERY);
+
+const listOfBrothers = sanityBrothers.map((brother) => {
 	const { country } = brother
 	const countryName = COUNTRIES[country]?.name || ""
 	return { ...brother, countryName }
