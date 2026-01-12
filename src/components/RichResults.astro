@@ -1,5 +1,8 @@
 ---
-import { BROTHERS } from "@/consts/brothers"
+import { sanityClient } from "sanity:client";
+
+const POSTS_QUERY = `*[_type == "brother"]{name}`;
+const sanityBrothers = await sanityClient.fetch<{ name: string }[]>(POSTS_QUERY);
 
 /** https://developers.google.com/search/docs/appearance/structured-data/organization */
 const organizationSchema = {
@@ -43,7 +46,7 @@ const eventSchema = {
 	"description":
 		"Fiesta Chinchilpos y Gamonales en honor a Tayta Niño patron de Huayucachi, Huancayo, Perú.",
 	/* "offers": {}, // Añadir cuando las entradas estén disponibles https://schema.org/Offer */
-	"performer": BROTHERS.map(({ name }) => ({
+	"performer": sanityBrothers.map(({ name }) => ({
 		"@type": "Person",
 		"name": name,
 	})),
@@ -57,7 +60,7 @@ const eventSchema = {
 const FAQs = [
 	{
 		question: "¿Quienes pertenecen a la Hermandad Gamonalense y participaran en este edición?",
-		answer: `Los hermanos de esta edición serán: ${BROTHERS.map(({ name }) => name).join(", ")}`,
+		answer: `Los hermanos de esta edición serán: ${sanityBrothers.map(({ name }) => name).join(", ")}`,
 	},
 	{
 		question: "¿Cuándo tendrá lugar Chinchilpos y Gamonales 2025?",

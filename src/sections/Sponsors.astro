@@ -1,33 +1,61 @@
 ---
 import Typography from "@/components/Typography.astro"
 import { SPONSORS } from "@/consts/sponsors"
+import { sanityCdnClient, urlFor } from '../lib/sanity';
+
+const query = `
+	*[_type == "prioste" && active == true][0]
+	{ name, mainUrl, mainPhoto }
+`;
+
+const prioste = await sanityCdnClient.fetch<{ name: string; mainUrl?: string; mainPhoto: any }>(query);
+const priosteDesktopImageUrl = prioste.mainPhoto
+	? urlFor(prioste.mainPhoto).width(512).height(512).crop("center").url()
+	: null;
+const priosteMobileImageUrl = prioste.mainPhoto
+	? urlFor(prioste.mainPhoto).width(256).height(256).crop("center").url()
+	: null;
+
 ---
 
 <section class="my-40">
 	<div class="mb-20 flex flex-col items-center justify-center gap-4 xs:flex-row">
-		<Typography as="h3" variant="h3" color="primary" class:list={"text-center"}>
+		<Typography
+			as="h3"
+			variant="hermandadponsslab-title"
+			color="primary400"
+			class:list={"text-center"}
+		>
 			Priostes
 		</Typography>
 		<Typography as="h3" variant="h3" color="primary" class:list={"mt-4 text-center"}>
-			Familia Romero Prieto
+			{prioste.name}
 		</Typography>
 		<a
 			class="transition hover:scale-110 focus:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus:scale-100"
-			href="#"
+			href={prioste.mainUrl || '#'}
 			title="Ir a la página del Prioste de la fiesta"
 			target="_blank"
 			aria-label="Link con el logo/foto del Prioste"
 		>
+		<picture>
+			<source
+				srcset={priosteMobileImageUrl}
+				media="(max-width: 640px)"
+			/>
+			<source
+				srcset={priosteDesktopImageUrl}
+				media="(min-width: 641px)"
+			/>
 			<img
 				decoding="async"
-				src={"//FIXME: Add the image of the Prioste and the link to the page"}
+				src={priosteDesktopImageUrl}
 				loading="lazy"
-				width={128}
-				height={70}
 				fetchpriority="low"
-				alt={"Logo del Prioste"}
+				alt={prioste.mainPhoto.alt || `Foto del prioste ${prioste.name}`}
 				class="inline-block select-none text-white transition hover:text-accent focus:text-accent"
 			/>
+		</picture>
 		</a>
 	</div>
 
