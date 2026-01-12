@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./*"]
-    }
+    },
+    "types": ["@sanity/astro/module"]
   },
   "exclude": [
     "public"

@@ -16,6 +16,14 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [tailwind(), sitemap(), sanity()],
   site: "https://hermandadgamonalense.com/",
+  integrations: [
+    tailwind(),
+    sitemap(),
+    sanity({
+      projectId: "m8nguuo2",
+      dataset: "production",
+      useCdn: false,
+    })
+  ],
 });
